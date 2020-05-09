@@ -1,0 +1,57 @@
+kind,name,url,filter,stateId,ssl_no_verify
+url,Alaska,https://services1.arcgis.com/WzFsmainVTuD5KML/arcgis/rest/services/COVID_Tests/FeatureServer/0/query?where=1%3D1&objectIds=&time=&resultType=none&outFields=cum_Total&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnDistinctValues=false&cacheHint=true&orderByFields=cum_Total+desc&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=1&sqlFormat=none&f=html&token=,"css:.ftrTable,html2text,strip",AK
+url,Alabama,"https://services7.arcgis.com/4RQmZZ0yaZkGR1zy/arcgis/rest/services/COV19_Public_Dashboard_ReadOnly/FeatureServer/0/query?where=CONFIRMED>0&outStatistics=[{""statisticType"":""sum"",""onStatisticField"":""CONFIRMED""}]&cacheHint=true","css:.ftrTable,html2text,strip",AL
+url,Arkansas,https://www.healthy.arkansas.gov/programs-services/topics/novel-coronavirus,"css:#contentBody table:contains(""Cases""),html2text,strip",AR
+url,Arizona,https://tableau.azdhs.gov/views/UpdatedCOVIDdashboardV2/Story1.png,"ocr,clean-new-lines",AZ
+url,California,https://www.cdph.ca.gov/Programs/OPA/Pages/New-Release-2020.aspx,"css:table:contains(""State Officials Announce"") tr:nth-child(1),html2text,strip",CA
+url,Colorado,https://covid19.colorado.gov/data,"css:article .paragraph--type--bp-columns__3col,html2text,strip",CO
+url,Connecticut,https://data.ct.gov/api/views/ncg4-6gkj/rows.csv?accessType=DOWNLOAD,strip,CT
+url,Washington DC,https://coronavirus.dc.gov/page/coronavirus-data,"css:ul:contains(""tested"") li:first-child,html2text,strip",DC
+url,Delaware,"https://services1.arcgis.com/PlCPCPzGOwulHUHo/arcgis/rest/services/DEMA_COVID_County_Boundary_Time_VIEW/FeatureServer/0/query?where=1=1&outFields=NAME,Recovered,Total_Death,Hospitalizations,NegativeCOVID,Presumptive_Positive,Pending&returnGeometry=false&cacheHint=true","css:.ftrTable,html2text,strip",DE
+url,Florida,https://services1.arcgis.com/CY1LXxl9zlJeBuRZ/ArcGIS/rest/services/Florida_Testing/FeatureServer/0/query?where=1%3D1&returnGeometry=true&cacheHint=false&outStatistics=%5B%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22T_positive%22%7D%2C%0D%0A%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22T_negative%22%7D%2C%0D%0A%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22T_total%22%7D%0D%0A%5D&f=html,"css:.ftrTable,html2text,strip",FL
+url,Georgia,https://ga-covid19.ondemand.sas.com/report-images/ve1035-375x200.svg,"html2text,strip",GA
+url,Hawaii,https://health.hawaii.gov/coronavirusdisease2019/what-you-should-know/current-situation-in-hawaii/,"css:table:contains(""Total Cases""),html2text,strip",HI
+url,Iowa,"https://phantomjscloud.com/api/browser/v2/ak-7r01w-m166n-bm6wx-r4vn0-4m2m9/?request={url:'https://public.domo.com/embed/pages/erJAp',renderType:'html','requestSettings':{'waitInterval':6000}}","css:pg-layout-frame:contains(""Individuals""),html2text,strip",IA
+url,Idaho,https://coronavirus.idaho.gov/,"css:.wp-block-column .wp-block-columns:contains(""Cases""),html2text,strip",ID
+url,Illinois,http://www.dph.illinois.gov/sitefiles/COVIDTestResults.json,,IL
+url,Indiana,https://hub.mph.in.gov/datastore/dump/182b6742-edac-442d-8eeb-62f96b17773e?format=json,,IN
+url,Kansas,https://public.tableau.com/views/COVID-19TableauVersion2/CaseSummary.png?%3AshowVizHome=no,"ocr,clean-new-lines,grep:Last updated",KS
+url,Kentucky,https://chfs.ky.gov/agencies/dph/Pages/covid19.aspx,"css:p:contains(""Current as of"") + div.row,html2text",KY
+url,Louisiana,https://services5.arcgis.com/O5K6bb5dZVZcTo5M/arcgis/rest/services/State_Level_Information_1/FeatureServer/0/query?where=1=1&returnGeometry=false&outFields=*&cacheHint=true,"css:.ftrTable,html2text,strip",LA
+url,Massachusetts,https://www.mass.gov/info-details/covid-19-cases-quarantine-and-monitoring,"css:table,html2text",MA
+url,Maryland,https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services/MD_COVID19_Case_Counts_by_County/FeatureServer/0/query?where=1%3D1&cacheHint=true&outStatistics=%5B%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22TotalCaseCount%22%7D%5D&f=html,"css:.ftrTable,html2text,strip",MD
+url,Maine,https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus.shtml,"css:table:contains(""Data""),html2text",ME
+url,Michigan,"https://www.michigan.gov/coronavirus/0,9753,7-406-98163-520743--,00.html","css:table,html2text,strip",MI
+url,Minnesota,https://www.health.state.mn.us/diseases/coronavirus/situation.html,"css:p:contains(""Total approximate number of completed tests""),html2text",MN
+url,Missouri,https://health.mo.gov/living/healthcondiseases/communicable/novel-coronavirus/results.php,"css:.text-danger,html2text,strip",MO
+url,Mississippi,"https://msdh.ms.gov/msdhsite/_static/14,0,420.html","css:.msdh .shadedBlue,html2text",MS
+url,Montana,"https://services.arcgis.com/qnjIrwR8z5Izc0ij/arcgis/rest/services/COVID_Cases_Production_View/FeatureServer/0/query?where=Total<>0&outStatistics=[{""statisticType"":""sum"",""onStatisticField"":""Total""},{""statisticType"":""sum"",""onStatisticField"":""TotalDeaths""},{""statisticType"":""sum"",""onStatisticField"":""HospitalizationCount""},{""statisticType"":""sum"",""onStatisticField"":""TotalRecovered""}]&cacheHint=true","css:.ftrTable,html2text,strip",MT
+url,Nebraska,https://gis.ne.gov/Agency/rest/services/COVID19_County_Layer/MapServer/3/query?f=json&where=NE_JURIS%3D%27yes%27&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&outStatistics=%5B%7B%22statisticType%22%3A%22count%22%2C%22onStatisticField%22%3A%22ID%22%2C%22outStatisticFieldName%22%3A%22value%22%7D%5D,,NE
+url,New Hampshire,https://www.nh.gov/covid19/,"css:table,html2text,strip",NH
+url,New Jersey,https://www.nj.gov/health/,"css:.slickCarousel-DOH .card-body table,html2text",NJ
+url,New Mexico,https://e7p503ngy5.execute-api.us-west-2.amazonaws.com/prod/GetPublicStatewideData,,NM
+url,Nevada,"https://phantomjscloud.com/api/browser/v2/ak-7r01w-m166n-bm6wx-r4vn0-4m2m9/?request={url:'https://app.powerbigov.us/view?r=eyJrIjoiMjA2ZThiOWUtM2FlNS00MGY5LWFmYjUtNmQwNTQ3Nzg5N2I2IiwidCI6ImU0YTM0MGU2LWI4OWUtNGU2OC04ZWFhLTE1NDRkMjcwMzk4MCJ9',renderType:'html'}","css:[aria-label*=""Test""] title,html2text,strip",NV
+url,New York,"https://phantomjscloud.com/api/browser/v2/ak-7r01w-m166n-bm6wx-r4vn0-4m2m9/?request={url:'https://covid19tracker.health.ny.gov/views/NYS-COVID19-Tracker/NYSDOHCOVID-19Tracker-Map?:embed=yes%26:toolbar=no',renderType:'jpg','requestSettings':{'waitInterval':4000},'renderSettings':{'clipRectangle':{'width':310,'height':85,'left':1400},'viewport':{'width':2048,'height':2048}}}","ocr,clean-new-lines",NY
+url,North Carolina,https://www.ncdhhs.gov/covid-19-case-count-nc,"css:table,html2text",NC
+url,North Dakota,https://www.health.nd.gov/diseases-conditions/coronavirus/north-dakota-coronavirus-cases,"css:.circle,html2text,strip",ND
+url,Ohio,https://coronavirus.ohio.gov/wps/portal/gov/covid-19/,"css:.odx-content-section .stats-cards__item,html2text,strip",OH
+url,Oklahoma,https://storage.googleapis.com/ok-covid-gcs-public-download/covid19_cases_summary.pdf,sha1sum,OK,true
+url,Oregon,https://govstatus.egov.com/OR-OHA-COVID-19,"css:table:contains(""Total persons""),html2text",OR,
+url,Pennsylvania,https://www.health.pa.gov/topics/disease/coronavirus/Pages/Cases.aspx,"css:table:contains(""Negative""),html2text",PA,
+url,Rhode Island,https://services1.arcgis.com/dkWT1XL4nglP5MLP/ArcGIS/rest/services/COVID_Public_Map_TEST/FeatureServer/2/query?where=City_Town+%3D+'TOTAL'&objectIds=&time=&resultType=none&outFields=*&cacheHint=false&f=html,"css:.ftrTable,html2text,strip",RI,
+url,South Carolina,https://scdhec.gov/monitoring-testing-covid-19,"css:table:contains(""Negative tests""),html2text",SC,
+url,South Dakota,"https://phantomjscloud.com/api/browser/v2/ak-7r01w-m166n-bm6wx-r4vn0-4m2m9/?request={url:'https://app.powerbigov.us/view?r=eyJrIjoiM2NjNzhmMTEtMzVhNi00ZGJlLTkxYjQtNjkyNDlkMTMyN2IwIiwidCI6IjcwYWY1NDdjLTY5YWItNDE2ZC1iNGE2LTU0M2I1Y2U1MmI5OSJ9',renderType:'html'}","css:div.visualContainer:contains(""LAST UPDATED""),html2text,strip",SD,
+url,Tennessee,https://apps.health.tn.gov/AEM_embed/TDH-2019-Novel-Coronavirus-Epi-and-Surveillance.pdf,sha1sum,TN,
+url,Texas,"https://services5.arcgis.com/ACaLB9ifngzawspq/arcgis/rest/services/COVID19County_ViewLayer/FeatureServer/0/query?where=Count_%3C%3E0&returnGeometry=false&outFields=*&cacheHint=true&outStatistics=[{%22statisticType%22:%22sum%22,%22onStatisticField%22:%22Count_%22}]","css:.ftrTable,html2text,strip",TX,
+url,Utah,https://coronavirus-dashboard.utah.gov/,"css:#row,html2text,strip",UT,
+url,Virginia,https://public.tableau.com/views/VirginiaCOVID-19Dashboard/VirginiaCOVID-19Dashboard.png?:showVizHome=no,"ocr,clean-new-lines",VA,
+url,Vermont,https://services1.arcgis.com/BkFxaEFNwHqX3tAw/arcgis/rest/services/county_summary/FeatureServer/0/query?where=1%3D1&outFields=*&cacheHint=true&orderByFields=date+DESC&resultRecordCount=1&f=html,"css:.ftrTable,html2text,strip",VT,
+url,Washington,"https://phantomjscloud.com/api/browser/v2/ak-7r01w-m166n-bm6wx-r4vn0-4m2m9/?request={url:'https://msit.powerbi.com/view?r=eyJrIjoiMzU1YjFjMzktZjk5ZS00OTA5LTkyMDQtNjNiZmQ0OWRmM2I1IiwidCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsImMiOjV9',renderType:'html'}","css:.bodyCells .cell-interactive,html2text,strip",WA,
+url,Wisconsin,"https://services1.arcgis.com/ISZ89Z51ft1G16OK/arcgis/rest/services/COVID19_WI/FeatureServer/2/query?where=1=1&outFields=NEGATIVE,POSITIVE,DEATHS&returnGeometry=false&useCacheHint=true","css:.ftrTable,html2text,strip",WI,
+url,West Virginia,https://dhhr.wv.gov/COVID-19/Pages/default.aspx,"css:table:contains(""Daily""),html2text",WV,
+url,Wyoming,https://health.wyo.gov/publichealth/infectious-disease-epidemiology-unit/disease/novel-coronavirus/,"css:.et_pb_text_inner:contains(""Testing Numbers""),html2text",WY,
+url,American Samoa,https://www.americansamoa.gov/covid-19-advisories,"css:main div[id$=""gridContainer""],html2text,strip",AS,
+url,Commonwealth of the Northern Mariana Islands,https://www.chcc.gov.mp/coronavirusinformation.php,"css:.bannerback,html2text",MP,
+url,Guam,https://ghs.guam.gov/coronavirus-covid-19,"css:.Blog .post:contains(""COVID"") .post-content,html2text,strip",GU,
+url,Puerto Rico,http://www.salud.gov.pr/Pages/coronavirus.aspx,"css:table:contains(""POSTIVOS""),html2text,strip",PR,
+url,Virgin Islands,https://doh.vi.gov/,"css:.page-content-sidebar .block:contains(""COVID-19""),html2text,strip",,
