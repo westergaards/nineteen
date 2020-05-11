@@ -3,7 +3,6 @@ import { Box, Paper, Grid } from "@material-ui/core";
 import { createGlobalState, useMount } from "react-use";
 import { StateChart } from "./StateChart";
 import { StateTestChart } from "./StateTestChart";
-import { stateAbbreviations } from "../models/stateAbbreviations";
 import data from "../../data/historical-state-data.json";
 
 export interface State {
@@ -66,16 +65,38 @@ export const StateChartWrapper = () => {
   return (
     <Box display="flex" pr={2}>
       <Grid container spacing={3}>
-        {Object.keys(stateAbbreviations).map((key) => (
-          <Grid item xs={12} sm={6}>
-            <Paper elevation={3}>
-              <StateChart state={key} />
-            </Paper>
-            <Paper elevation={3}>
-              <StateTestChart state={key} />
-            </Paper>
-          </Grid>
-        ))}
+        <Grid item xs={12} sm={6}>
+          <Paper elevation={3}>
+            <StateChart state="CA" />
+          </Paper>
+          <Paper elevation={3}>
+            <StateTestChart state="CA" />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper elevation={3}>
+            <StateChart state="OR" />
+          </Paper>
+          <Paper elevation={3}>
+            <StateTestChart state="OR" />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper elevation={3}>
+            <StateChart state="KS" />
+          </Paper>
+          <Paper elevation={3}>
+            <StateTestChart state="KS" />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper elevation={3}>
+            <StateChart state="FL" />
+          </Paper>
+          <Paper elevation={3}>
+            <StateTestChart state="FL" />
+          </Paper>
+        </Grid>
       </Grid>
     </Box>
   );

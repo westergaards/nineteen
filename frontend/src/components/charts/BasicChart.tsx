@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { CircularProgress, Box } from "@material-ui/core";
 import { byCountryTotalAllStatus } from "../../utils/covidApi";
 import { useCountryStats } from "../../App";
 import { timeline } from "../models/timeline";
@@ -132,7 +133,14 @@ export const BasicChart = () => {
   return (
     <div>
       {!chartOptions ? (
-        <div>blah</div>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={400}
+        >
+          <CircularProgress />
+        </Box>
       ) : (
         <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       )}
