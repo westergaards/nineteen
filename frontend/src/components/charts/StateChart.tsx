@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import { Box, CircularProgress } from "@material-ui/core";
 import { useStateStats } from "./StateChartWrapper";
 
 const highChartOptions = Highcharts.getOptions();
@@ -143,5 +144,20 @@ export const StateChart = (props: { state: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [states]);
 
-  return <HighchartsReact highcharts={Highcharts} options={chartOptions} />;
+  return (
+    <div>
+      {!states ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height={400}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+      )}
+    </div>
+  );
 };

@@ -7,7 +7,7 @@ export const CountryChartWrapper = () => {
     <Box display="flex" pb={2}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper elevation={3}>
+          <Paper elevation={2}>
             <BasicChart />
           </Paper>
         </Grid>

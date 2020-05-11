@@ -6,27 +6,6 @@ import { Timeline } from "./components/Timeline/Timeline";
 import { StateChartWrapper } from "./components/charts/StateChartWrapper";
 import { CountryChartWrapper } from "./components/charts/CountryChartWrapper";
 
-interface ComprehensiveStats {
-  death: number;
-  hash: string;
-  hospitalized: number;
-  hospitalizedCumulative: number;
-  hospitalizedCurrently: number;
-  inIcuCumulative: number;
-  inIcuCurrently: number;
-  lastModified: string;
-  negative: number;
-  notes: string;
-  onVentilatorCumulative: number;
-  onVentilatorCurrently: number;
-  pending: number;
-  posNeg: number;
-  positive: number;
-  recovered: number;
-  total: number;
-  totalTestResults: number;
-}
-
 interface CountryStats {
   Active: number;
   City: string;
@@ -88,7 +67,7 @@ function App() {
         <Box display="flex">
           <Grid container spacing={3}>
             <Grid item xs={3}>
-              <Box width="20vw" height={dimensions.height} overflow="auto">
+              <Box width="20vw" height="100vh" overflow="auto">
                 <Timeline align="left" />
               </Box>
             </Grid>
