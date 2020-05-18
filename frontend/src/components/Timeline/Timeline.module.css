@@ -8,5 +8,6 @@
   font-weight: bold;
 }
 
-.value {
+.active {
+  background: lightgray;
 }

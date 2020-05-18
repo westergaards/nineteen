@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { Box, Grid } from "@material-ui/core";
 import { createGlobalState } from "react-use";
 import { HeaderCards } from "./components/cards/HeaderCards";
@@ -22,65 +22,30 @@ interface CountryStats {
 }
 
 export const useCountryStats = createGlobalState<CountryStats[]>();
-
-function debounce(fn: Function, ms: number) {
-  let timer: any;
-  return (_: any) => {
-    clearTimeout(timer);
-    timer = setTimeout((_: any) => {
-      timer = null;
-      fn.apply(this, ...arguments);
-    }, ms);
-  };
-}
+export const useChartPlotPoints = createGlobalState<number>();
 
 function App() {
-  const [dimensions, setDimensions] = useState({
-    height: window.innerHeight - 250,
-    width: window.innerWidth,
-  });
-  const chartContainer = useRef(null);
-
-  useEffect(() => {
-    const debouncedHandleResize = debounce(function handleResize() {
-      setDimensions({
-        height: window.innerHeight - 250,
-        width: window.innerWidth,
-      });
-    }, 1000);
-
-    console.log("dimensions", dimensions.height);
-
-    window.addEventListener("resize", debouncedHandleResize);
-
-    return () => {
-      window.removeEventListener("resize", debouncedHandleResize);
-    };
-  });
-
   return (
-    <div className="App">
-      <Box>
-        <Box pb={2}>
-          <HeaderCards />
-        </Box>
-        <Box display="flex">
-          <Grid container spacing={3}>
-            <Grid item xs={3}>
-              <Box width="20vw" height="100vh" overflow="auto">
-                <Timeline align="left" />
-              </Box>
-            </Grid>
-            <Grid item xs={9} id="chart-container" ref={chartContainer}>
-              <Box display="flex" flexDirection="column" flexGrow={1}>
-                <CountryChartWrapper />
-                <StateChartWrapper />
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
+    <Box p={1}>
+      <Box pb={2}>
+        <HeaderCards />
       </Box>
-    </div>
+      <Box display="flex">
+        <Grid container spacing={3}>
+          <Grid item xs={3}>
+            <Box display="flex">
+              <Timeline align="left" />
+            </Box>
+          </Grid>
+          <Grid item xs={9} id="chart-container">
+            <Box display="flex" flexDirection="column" flexGrow={1}>
+              <CountryChartWrapper />
+              <StateChartWrapper />
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   );
 }
 

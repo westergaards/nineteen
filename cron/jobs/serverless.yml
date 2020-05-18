@@ -1,0 +1,114 @@
+service:
+  name: jobs
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: 'us-east-1'
+  memorySize: 128 # Overwrite the default memory size. Default is 1024
+  timeout: 120
+  apiGateway:
+    minimumCompressionSize: 128 # Enable gzip compression for responses > 1 KB
+
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    COVID_DATA_TABLE_NAME: ${self:custom.covidTableName}
+    COVID_IMPORT_RECORD_TABLE_NAME: ${self:custom.covidImportRecordTableName}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:Scan
+        - dynamodb:BatchWriteItem
+        - dynamodb:PutItem
+      Resource:
+        - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.covidTableName}'
+        - 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.covidImportRecordTableName}'
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+  dynamodb:
+    # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: false
+      convertEmptyValues: true
+    # Uncomment only if you already have a DynamoDB running locally
+    # noStart: true
+    seed:
+      domain:
+        sources:
+          - table: covid_data
+            sources: [./seeds/historical-state-data.json]
+
+  covidTableName: covid-data
+  covidImportRecordTableName: covid-import-record
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-dynamodb-local
+
+functions:
+  stateHistorical:
+    handler: src/api/state/handler.importHistorical
+    timeout: 900 # optional, in seconds, default is 6
+    events:
+      - http:
+          path: api/state/historical
+          method: put # idempotent
+  stateCurrent:
+    handler: src/api/state/handler.importCurrent
+    timeout: 900 # optional, in seconds, default is 6
+    events:
+      # Every day at midnight UTC
+      - schedule: cron(0 0 * * ? *)
+      - http:
+          path: api/state/current
+          method: put # idempotent
+
+resources:
+  Resources:
+    covidData:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.covidTableName}
+        AttributeDefinitions:
+          - AttributeName: state
+            AttributeType: S
+          - AttributeName: date
+            AttributeType: N
+        KeySchema:
+          - AttributeName: state
+            KeyType: HASH
+          - AttributeName: date
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+
+    covidImportRecord:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.covidImportRecordTableName}
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        KeySchema:
+          - AttributeName: importDay
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: importDay
+            AttributeType: S
