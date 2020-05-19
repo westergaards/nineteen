@@ -1,15 +1,22 @@
-import AWS from 'aws-sdk'
-import DynamoDB from 'aws-sdk/clients/dynamodb'
+import * as AWS from 'aws-sdk'
 import { chunk } from 'lodash'
 import { format, startOfDay } from 'date-fns'
 import { ImportStatus } from '../models/ImportStatus.enum'
 
-AWS.config.update({
-  region: process.env.REGION,
-  endpoint: 'http://localhost:8000'
-})
+console.log(process.env)
 
-const documentClient = new DynamoDB.DocumentClient()
+if (process.env.NODE_ENV === 'development') {
+  AWS.config.update({
+    region: process.env.REGION,
+    endpoint: 'http://localhost:8000'
+  })
+} else {
+  AWS.config.update({
+    region: process.env.REGION
+  })
+}
+
+const documentClient = new AWS.DynamoDB.DocumentClient()
 const today = format(startOfDay(new Date()), 'MM/dd/yyyy')
 
 // Import the status record so we don't attempt to write the record twice.

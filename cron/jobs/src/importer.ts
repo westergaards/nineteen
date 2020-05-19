@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { plainToClass } from 'class-transformer'
-import { startOfDay, format } from 'date-fns'
+import { startOfDay, subDays, format } from 'date-fns'
 import CovidData from './models/CovidData.model'
 import { FetchError } from './errors/error'
 import { ImportStatus } from './models/ImportStatus.enum'
@@ -67,7 +67,9 @@ export const importCurrentStateData = async () => {
     await updateImportRecord(ImportStatus.Pending)
 
     let data = await fetchHistoricalStateData()
-    data = data.filter((item) => item.date === parseInt(format(startOfDay(new Date()), 'yyyyMMdd')))
+    data = data.filter(
+      (item) => item.date === parseInt(format(subDays(startOfDay(new Date()), 1), 'yyyyMMdd'))
+    )
 
     let transformedData = mapDataToClass(data)
 
