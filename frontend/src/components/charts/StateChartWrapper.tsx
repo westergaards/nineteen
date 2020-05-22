@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Paper, Grid } from "@material-ui/core";
-import { createGlobalState } from "react-use";
+import { createGlobalState, useMount } from "react-use";
+import axios from "axios";
 import { StateChart } from "./StateChart";
 import { StateTestChart } from "./StateTestChart";
-import useSWR from "swr";
 
 export interface State {
   dataQualityGrade: string;
@@ -40,33 +40,22 @@ export const useStateStats = createGlobalState<State[]>();
 
 export const StateChartWrapper = () => {
   const [, setStateStats] = useStateStats();
-  const { data } = useSWR(`http://localhost:3001/data`);
 
-  // useMount(() => {
-  //   console.log("data", data);
-  //   // let stateData = data.map((value) => {
-  //   //   let dateStr = value.date.toString();
+  useMount(async () => {
+    try {
+      let california = await axios.get(
+        "https://v5cf31h8sd.execute-api.us-east-1.amazonaws.com/dev/state/search?state=CA"
+      );
+      let kansas = await axios.get(
+        "https://v5cf31h8sd.execute-api.us-east-1.amazonaws.com/dev/state/search?state=KS"
+      );
+      let results = [...california.data.message, ...kansas.data.message];
 
-  //   //   let newDate = new Date(
-  //   //     dateStr.slice(0, 4) +
-  //   //       "/" +
-  //   //       dateStr.slice(4, dateStr.length - 2) +
-  //   //       "/" +
-  //   //       dateStr.slice(6, dateStr.length)
-  //   //   );
-
-  //   //   return {
-  //   //     datetime: newDate.getTime(),
-  //   //     date: newDate.toDateString(),
-  //   //     ...value,
-  //   //   };
-  //   // });
-  //   // setStateStats(stateData);
-  // });
-
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
+      setStateStats(results);
+    } catch (e) {
+      console.log(e);
+    }
+  });
 
   return (
     <Box display="flex" pr={2}>
@@ -77,6 +66,14 @@ export const StateChartWrapper = () => {
           </Paper>
           <Paper elevation={3}>
             <StateTestChart state="CA" />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper elevation={3}>
+            <StateChart state="KS" />
+          </Paper>
+          <Paper elevation={3}>
+            <StateTestChart state="KS" />
           </Paper>
         </Grid>
         {/* <Grid item xs={12} sm={6}>

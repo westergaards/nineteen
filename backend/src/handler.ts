@@ -5,6 +5,10 @@ import { getCovidDataHistorical } from './service/dynamodb'
 const response = (message, status = 200) => {
   return {
     statusCode: status,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
+    },
     body: JSON.stringify(
       {
         message

@@ -22,7 +22,7 @@ const options = {
     },
   },
   legend: {
-    enabled: false,
+    enabled: true,
   },
   plotOptions: {
     area: {

@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Grid } from "@material-ui/core";
 import { createGlobalState } from "react-use";
 import { HeaderCards } from "./components/cards/HeaderCards";
-import { Timeline } from "./components/Timeline/Timeline";
 import { StateChartWrapper } from "./components/charts/StateChartWrapper";
 import { CountryChartWrapper } from "./components/charts/CountryChartWrapper";
 
@@ -32,11 +31,6 @@ function App() {
       </Box>
       <Box display="flex">
         <Grid container spacing={3}>
-          {/* <Grid item xs={3}>
-            <Box display="flex">
-              <Timeline align="left" />
-            </Box>
-          </Grid> */}
           <Grid item xs={12} id="chart-container">
             <Box display="flex" flexDirection="column" flexGrow={1}>
               <CountryChartWrapper />

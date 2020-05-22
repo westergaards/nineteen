@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Paper, makeStyles, CircularProgress } from "@material-ui/core";
 import CountUp from "react-countup";
+import numeral from "numeral";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export const Card = (props: any) => {
   const classes = useStyles();
   console.log("props.value", props.value);
+  const format = (number) => numeral(number).format("0,0");
   return (
     <Box className={classes.root}>
       <Paper elevation={3}>
@@ -35,7 +37,7 @@ export const Card = (props: any) => {
                 {props.value === 0 || !props.value ? (
                   `0`
                 ) : (
-                  <CountUp end={props.value} />
+                  <CountUp end={props.value} formattingFn={format} />
                 )}
               </Box>
             </Box>

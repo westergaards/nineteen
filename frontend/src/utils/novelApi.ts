@@ -1,11 +1,8 @@
-import { NovelCovid } from "novelcovid";
 import axios from "axios";
-import { Country } from "./interfaces/country.model";
-//const track = new NovelCovid();
-// Get summary totals for the US (today and yesterda)
-
+// Get summary totals for the US (today and yesterdau)
 // for some reason the api library does not filter out
 // by state and options so we'll use the actual api here
+
 const baseUrl = "https://disease.sh/v2";
 export const getCountrySummaryStatsToday = async () => {
   let result = await axios.get(`${baseUrl}/countries/USA?yesterday=false`);

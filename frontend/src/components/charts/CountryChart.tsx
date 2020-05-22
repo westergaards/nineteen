@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { CircularProgress, Box, Typography } from "@material-ui/core";
+import { CircularProgress, Box } from "@material-ui/core";
 import { byCountryTotalAllStatus } from "../../utils/covidApi";
-import { useCountryStats, useChartPlotPoints } from "../../App";
-import { timeline } from "../models/timeline";
-import ReactHtmlParser from "react-html-parser";
+import { useCountryStats } from "../../App";
 
 import AnnotationsModule from "highcharts/modules/annotations";
 AnnotationsModule(Highcharts);
@@ -38,11 +36,6 @@ const options = {
 
   annotations: [
     {
-      // labelOptions: {
-      //   backgroundColor: "rgba(255,255,255,0.5)",
-      //   verticalAlign: "top",
-      //   y: -40,
-      // },
       labels: [] as any,
     },
   ],
@@ -85,8 +78,6 @@ const options = {
 export const CountryChart = () => {
   const [value, setValue] = useCountryStats();
   const [chartOptions, setChartOptions] = useState<any>(null);
-  const [plotPoints, setPlotPoints] = useChartPlotPoints();
-  const [text, setText] = useState("");
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -105,22 +96,6 @@ export const CountryChart = () => {
         return [new Date(f.Date).getTime(), f.Deaths];
       });
 
-      // for (const point of series) {
-      //   let [datetime, deaths] = point;
-      //   if (timeline[datetime]) {
-      //     let label = {
-      //       point: {
-      //         xAxis: 0,
-      //         yAxis: 0,
-      //         x: datetime,
-      //         y: deaths,
-      //       },
-      //       text: timeline[datetime],
-      //     };
-      //     newOptions.annotations[0].labels.push(label);
-      //   }
-      // }
-
       newOptions.series = [
         {
           name: "deaths",
@@ -128,98 +103,6 @@ export const CountryChart = () => {
           data: series,
         },
       ];
-
-      newOptions.plotOptions.series = {
-        point: {
-          events: {
-            mouseOver: function () {
-              var chart = this.series.chart;
-              // if (!chart.lbl) {
-              //   chart.lbl = chart.renderer
-              //     .label("")
-              //     .attr({
-              //       padding: 10,
-              //       r: 10,
-              //       fill: Highcharts.getOptions().colors[1],
-              //     })
-              //     .css({
-              //       color: "#FFFFFF",
-              //     })
-              //     .add();
-              // }
-
-              console.log("this.series", this.series);
-              if (timeline[this.x]) {
-                // var newAnnotations = {
-                //   id: "hover",
-                //   labels: [
-                //     {
-                //       point: {
-                //         xAxis: 0,
-                //         yAxis: 0,
-                //         x: this.x,
-                //         y: this.y,
-                //       },
-                //       text: timeline[this.x],
-                //     },
-                //   ],
-                // };
-
-                // console.log(chart);
-                // chart.annotations.forEach((annotation) => annotation.destroy());
-                // chart.annotations.length = 0;
-
-                // chart.addAnnotation(newAnnotations);
-                //chart.update({series: })
-                //chart.annotations[0].labels.push(label);
-                // chart.lbl.show().attr({
-                //   text: timeline[this.x],
-                // });
-                setText(timeline[this.x]);
-              }
-            },
-          },
-        },
-        events: {
-          mouseOut: function () {
-            if (this.chart.lbl) {
-              // this.chart.lbl.hide();
-              console.log(this.chart);
-              //const annotations = this.chart.annotations;
-
-              // this.chart.annotations.forEach((annotation) =>
-              //   annotation.destroy()
-              // );
-              // this.chart.annotations.length = 0;
-              // for (let i = annotations.length - 1; i > -1; --i) {
-              //   this.chart.removeAnnotation(annotations[i].options.id);
-              // }
-
-              // this.chart.annotations = [
-              //   {
-              //     // labelOptions: {
-              //     //   backgroundColor: "rgba(255,255,255,0.5)",
-              //     //   verticalAlign: "top",
-              //     //   y: -40,
-              //     // },
-              //     labels: [] as any,
-              //   },
-              // ];
-              // this.chart.removeAnnotation("hover");
-              // this.series.chart.annotations = [
-              //   {
-              //     // labelOptions: {
-              //     //   backgroundColor: "rgba(255,255,255,0.5)",
-              //     //   verticalAlign: "top",
-              //     //   y: -40,
-              //     // },
-              //     labels: [] as any,
-              //   },
-              // ];
-            }
-          },
-        },
-      };
 
       setChartOptions(newOptions);
     }
@@ -234,11 +117,6 @@ export const CountryChart = () => {
         ) : (
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
         )}
-        {/* <Box p={2}>
-          <Typography variant="body1" color="textPrimary">
-            {ReactHtmlParser(text)}
-          </Typography>
-        </Box> */}
       </Box>
     </div>
   );

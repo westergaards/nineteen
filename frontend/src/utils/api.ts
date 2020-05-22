@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 const baseUrl: string = "https://covidtracking.com";
 const currentUrl: string = "/api/v1/us/current.json";

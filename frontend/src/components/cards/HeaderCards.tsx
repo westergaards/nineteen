@@ -42,7 +42,7 @@ export const HeaderCards = (props: any) => {
         <Card title="Total Cases" value={value?.cases} />
         <Card title="Today Cases" value={value?.todayCases || 0} />
         <Card title="Recovered" value={value?.recovered} />
-        <Card title="Recovered" value={value?.critical} />
+        <Card title="Critical" value={value?.critical} />
       </Box>
     </Box>
   );

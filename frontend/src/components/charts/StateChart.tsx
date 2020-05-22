@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import axios from "axios";
 import { Box, CircularProgress } from "@material-ui/core";
-import { useMount } from "react-use";
-//import { useStateStats } from "./StateChartWrapper";
+import { useStateStats } from "./StateChartWrapper";
 
 const highChartOptions = Highcharts.getOptions();
 const color =
@@ -25,7 +23,7 @@ const options = {
     },
   },
   legend: {
-    enabled: false,
+    enabled: true,
   },
   plotOptions: {
     area: {
@@ -67,19 +65,8 @@ const options = {
 
 export const StateChart = (props: { state: string }) => {
   //const [states] = useStateStats();
-  const [states, setStates] = useState([]);
+  const [states] = useStateStats();
   const [chartOptions, setChartOptions] = useState(options);
-
-  useMount(async () => {
-    try {
-      let results = await axios.get(
-        "https://v5cf31h8sd.execute-api.us-east-1.amazonaws.com/dev/state/search?state=CA"
-      );
-      setStates(results.data);
-    } catch (e) {
-      console.log(e);
-    }
-  });
 
   useEffect(() => {
     if (states) {
@@ -88,6 +75,7 @@ export const StateChart = (props: { state: string }) => {
       let filtered = states
         .filter((s) => s.state === props.state)
         .sort((a, b) => a.datetime - b.datetime);
+
       let deathData = filtered.map((f) => {
         return [f.datetime, f.death];
       });
@@ -135,10 +123,6 @@ export const StateChart = (props: { state: string }) => {
           data: inIcuCurrentlyData,
         },
       ];
-
-      if (props.state === "KS") {
-        console.log(filtered);
-      }
 
       // let unemploymentStateData = data.find(
       //   (unemployment) => unemployment.state === props.state
