@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Paper, Grid } from "@material-ui/core";
-import { createGlobalState, useMount } from "react-use";
+import { createGlobalState } from "react-use";
 import { StateChart } from "./StateChart";
 import { StateTestChart } from "./StateTestChart";
-import data from "../../data/historical-state-data.json";
+import useSWR from "swr";
 
 export interface State {
   dataQualityGrade: string;
@@ -40,27 +40,33 @@ export const useStateStats = createGlobalState<State[]>();
 
 export const StateChartWrapper = () => {
   const [, setStateStats] = useStateStats();
+  const { data } = useSWR(`http://localhost:3001/data`);
 
-  useMount(() => {
-    let stateData = data.map((value) => {
-      let dateStr = value.date.toString();
+  // useMount(() => {
+  //   console.log("data", data);
+  //   // let stateData = data.map((value) => {
+  //   //   let dateStr = value.date.toString();
 
-      let newDate = new Date(
-        dateStr.slice(0, 4) +
-          "/" +
-          dateStr.slice(4, dateStr.length - 2) +
-          "/" +
-          dateStr.slice(6, dateStr.length)
-      );
+  //   //   let newDate = new Date(
+  //   //     dateStr.slice(0, 4) +
+  //   //       "/" +
+  //   //       dateStr.slice(4, dateStr.length - 2) +
+  //   //       "/" +
+  //   //       dateStr.slice(6, dateStr.length)
+  //   //   );
 
-      return {
-        datetime: newDate.getTime(),
-        date: newDate.toDateString(),
-        ...value,
-      };
-    });
-    setStateStats(stateData);
-  });
+  //   //   return {
+  //   //     datetime: newDate.getTime(),
+  //   //     date: newDate.toDateString(),
+  //   //     ...value,
+  //   //   };
+  //   // });
+  //   // setStateStats(stateData);
+  // });
+
+  useEffect(() => {
+    console.log("data", data);
+  }, [data]);
 
   return (
     <Box display="flex" pr={2}>
@@ -73,7 +79,7 @@ export const StateChartWrapper = () => {
             <StateTestChart state="CA" />
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <Paper elevation={3}>
             <StateChart state="OR" />
           </Paper>
@@ -96,7 +102,7 @@ export const StateChartWrapper = () => {
           <Paper elevation={3}>
             <StateTestChart state="FL" />
           </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   );

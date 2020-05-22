@@ -32,12 +32,12 @@ function App() {
       </Box>
       <Box display="flex">
         <Grid container spacing={3}>
-          <Grid item xs={3}>
+          {/* <Grid item xs={3}>
             <Box display="flex">
               <Timeline align="left" />
             </Box>
-          </Grid>
-          <Grid item xs={9} id="chart-container">
+          </Grid> */}
+          <Grid item xs={12} id="chart-container">
             <Box display="flex" flexDirection="column" flexGrow={1}>
               <CountryChartWrapper />
               <StateChartWrapper />

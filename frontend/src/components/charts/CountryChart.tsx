@@ -134,19 +134,19 @@ export const CountryChart = () => {
           events: {
             mouseOver: function () {
               var chart = this.series.chart;
-              if (!chart.lbl) {
-                chart.lbl = chart.renderer
-                  .label("")
-                  .attr({
-                    padding: 10,
-                    r: 10,
-                    fill: Highcharts.getOptions().colors[1],
-                  })
-                  .css({
-                    color: "#FFFFFF",
-                  })
-                  .add();
-              }
+              // if (!chart.lbl) {
+              //   chart.lbl = chart.renderer
+              //     .label("")
+              //     .attr({
+              //       padding: 10,
+              //       r: 10,
+              //       fill: Highcharts.getOptions().colors[1],
+              //     })
+              //     .css({
+              //       color: "#FFFFFF",
+              //     })
+              //     .add();
+              // }
 
               console.log("this.series", this.series);
               if (timeline[this.x]) {
@@ -228,25 +228,18 @@ export const CountryChart = () => {
 
   return (
     <div>
-      {!chartOptions ? (
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height={400}
-        >
+      <Box pt={2}>
+        {!chartOptions ? (
           <CircularProgress />
-        </Box>
-      ) : (
-        <Box pt={2}>
+        ) : (
           <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-          <Box p={2}>
-            <Typography variant="body1" color="textPrimary">
-              {ReactHtmlParser(text)}
-            </Typography>
-          </Box>
-        </Box>
-      )}
+        )}
+        {/* <Box p={2}>
+          <Typography variant="body1" color="textPrimary">
+            {ReactHtmlParser(text)}
+          </Typography>
+        </Box> */}
+      </Box>
     </div>
   );
 };

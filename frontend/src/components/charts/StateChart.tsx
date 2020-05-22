@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import axios from "axios";
 import { Box, CircularProgress } from "@material-ui/core";
-import { useStateStats } from "./StateChartWrapper";
+import { useMount } from "react-use";
+//import { useStateStats } from "./StateChartWrapper";
 
 const highChartOptions = Highcharts.getOptions();
 const color =
@@ -64,8 +66,20 @@ const options = {
 };
 
 export const StateChart = (props: { state: string }) => {
-  const [states] = useStateStats();
+  //const [states] = useStateStats();
+  const [states, setStates] = useState([]);
   const [chartOptions, setChartOptions] = useState(options);
+
+  useMount(async () => {
+    try {
+      let results = await axios.get(
+        "https://v5cf31h8sd.execute-api.us-east-1.amazonaws.com/dev/state/search?state=CA"
+      );
+      setStates(results.data);
+    } catch (e) {
+      console.log(e);
+    }
+  });
 
   useEffect(() => {
     if (states) {
