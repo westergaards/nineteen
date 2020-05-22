@@ -58,6 +58,7 @@ const options = {
       name: "deaths",
       type: "area",
       data: [] as any,
+      visible: true,
     },
   ],
 };
@@ -93,16 +94,19 @@ export const StateTestChart = (props: { state: string }) => {
           name: "Total Test Results",
           type: "area",
           data: totalTestResults,
+          visible: true,
         },
         {
           name: "Negative Test Results",
           type: "area",
           data: totalNegativeTestResultsData,
+          visible: false,
         },
         {
           name: "Positive Test Results",
           type: "area",
           data: totalPositiveTestResultsData,
+          visible: false,
         },
       ];
 
