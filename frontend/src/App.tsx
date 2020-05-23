@@ -2,8 +2,8 @@ import React from "react";
 import { Box, Grid } from "@material-ui/core";
 import { createGlobalState } from "react-use";
 import { HeaderCards } from "./components/cards/HeaderCards";
-import { StateChartWrapper } from "./components/charts/StateChartWrapper";
-import { CountryChartWrapper } from "./components/charts/CountryChartWrapper";
+// import { CountryChartWrapper } from "./components/charts/CountryChartWrapper";
+import { MiniChartWrapper } from "./components/charts/MiniChart/MiniChartWrapper";
 
 interface CountryStats {
   Active: number;
@@ -33,8 +33,10 @@ function App() {
         <Grid container spacing={3}>
           <Grid item xs={12} id="chart-container">
             <Box display="flex" flexDirection="column" flexGrow={1}>
-              <CountryChartWrapper />
-              <StateChartWrapper />
+              {/* <CountryChartWrapper /> */}
+              {/* <StateChartWrapper /> */}
+
+              <MiniChartWrapper />
             </Box>
           </Grid>
         </Grid>

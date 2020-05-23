@@ -10,11 +10,8 @@ export const HeaderCards = (props: any) => {
   const [value, setValue] = useState<Country>();
   useMount(async () => {
     const result = await getCountrySummaryStatsToday();
-    console.log("result", result);
     setValue(result);
   });
-
-  console.log("value", value);
 
   return (
     <Box display="flex" justifyContent="center" flexDirection="column">
@@ -38,11 +35,13 @@ export const HeaderCards = (props: any) => {
       </Box>
       <Box display="flex" justifyContent="center" flexDirection="row">
         <Card title="Total Deaths" value={value?.deaths} />
-        <Card title="Today Deaths" value={value?.todayDeaths || 0} />
         <Card title="Total Cases" value={value?.cases} />
-        <Card title="Today Cases" value={value?.todayCases || 0} />
         <Card title="Recovered" value={value?.recovered} />
         <Card title="Critical" value={value?.critical} />
+      </Box>
+      <Box display="flex" justifyContent="center" flexDirection="row">
+        <Card title="Today Deaths" value={value?.todayDeaths || 0} />
+        <Card title="Today Cases" value={value?.todayCases || 0} />
       </Box>
     </Box>
   );
