@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     fontFamily: "Unica One, sans-serif",
   },
   count: {
-    marginBottom: 12,
+    marginBottom: 10,
     fontFamily: "Unica One, sans-serif",
     fontSize: 26,
   },

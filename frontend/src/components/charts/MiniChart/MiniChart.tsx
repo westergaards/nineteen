@@ -76,7 +76,7 @@ export const MiniChart = (props: HighchartsReact.Props) => {
 
       let average = arrAvg(averageSlice);
       let lastIndex = positiveIncrease[positiveIncrease.length - 1][1];
-      let color = lastIndex > average ? "#e76f51ff" : "#2a9d8f";
+      let color = lastIndex > average ? "#E63946" : "#06d6a0";
 
       const newOptions = {
         ...chartOptions,
