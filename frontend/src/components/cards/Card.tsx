@@ -29,7 +29,7 @@ export const Card = (props: any) => {
   return (
     <MuiCard elevation={3} className={classes.root}>
       <CardContent>
-        <Typography variant="h4" className={classes.count}>
+        <Typography variant="h5" className={classes.count}>
           {props.value === 0 || !props.value ? (
             `0`
           ) : (

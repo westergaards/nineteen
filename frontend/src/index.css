@@ -2,10 +2,12 @@
 /* @import url("https://fonts.googleapis.com/css?family=Anton"); */
 
 html {
-  font-family: "SourceSansPro", sans-serif;
+  /* font-family: "SourceSansPro", sans-serif; */
+  font-family: "Unica One", sans-serif;
   /* background: #2a2a2b; */
   /* font-family: "Unica One", Arial, Helvetica, sans-serif; */
-  font-size: 12px;
+  line-height: normal;
+  text-transform: uppercase;
   color: #e0e0e3;
 }
 
