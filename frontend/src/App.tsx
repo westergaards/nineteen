@@ -1,9 +1,16 @@
 import React from "react";
-import { Box, Grid } from "@material-ui/core";
+import {
+  Grid,
+  makeStyles,
+  createMuiTheme,
+  ThemeProvider,
+} from "@material-ui/core";
 import { createGlobalState } from "react-use";
 import { HeaderCards } from "./components/cards/HeaderCards";
+
 // import { CountryChartWrapper } from "./components/charts/CountryChartWrapper";
 import { MiniChartWrapper } from "./components/charts/MiniChart/MiniChartWrapper";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 interface CountryStats {
   Active: number;
@@ -23,25 +30,44 @@ interface CountryStats {
 export const useCountryStats = createGlobalState<CountryStats[]>();
 export const useChartPlotPoints = createGlobalState<number>();
 
-function App() {
-  return (
-    <Box p={1}>
-      <Box pb={2}>
-        <HeaderCards />
-      </Box>
-      <Box display="flex">
-        <Grid container spacing={3}>
-          <Grid item xs={12} id="chart-container">
-            <Box display="flex" flexDirection="column" flexGrow={1}>
-              {/* <CountryChartWrapper /> */}
-              {/* <StateChartWrapper /> */}
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      // backgroundColor: theme.palette.secondary.main,
+    },
+    [theme.breakpoints.up("md")]: {
+      // backgroundColor: theme.palette.primary.main,
+    },
+    [theme.breakpoints.up("lg")]: {
+      // backgroundColor: "#ececec",
+    },
+  },
+  charts: {
+    paddingTop: theme.spacing(2),
+  },
+}));
 
-              <MiniChartWrapper />
-            </Box>
-          </Grid>
+function App() {
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: "dark",
+    },
+  });
+  const classes = useStyles();
+
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Grid container xs={12} justify="center" className={classes.root}>
+        <Grid item>
+          <HeaderCards />
         </Grid>
-      </Box>
-    </Box>
+        <Grid item className={classes.charts}>
+          <MiniChartWrapper />
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 }
 

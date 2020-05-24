@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Grid } from "@material-ui/core";
 import { useMount } from "react-use";
 import { format } from "date-fns";
 import { Card } from "./Card";
@@ -8,6 +8,7 @@ import { Country } from "../../utils/interfaces/country.model";
 
 export const HeaderCards = (props: any) => {
   const [value, setValue] = useState<Country>();
+
   useMount(async () => {
     const result = await getCountrySummaryStatsToday();
     setValue(result);
@@ -33,16 +34,29 @@ export const HeaderCards = (props: any) => {
           </Typography>
         </Box>
       </Box>
-      <Box display="flex" justifyContent="center" flexDirection="row">
-        <Card title="Total Deaths" value={value?.deaths} />
-        <Card title="Total Cases" value={value?.cases} />
-        <Card title="Recovered" value={value?.recovered} />
-        <Card title="Critical" value={value?.critical} />
-      </Box>
-      <Box display="flex" justifyContent="center" flexDirection="row">
-        <Card title="Today Deaths" value={value?.todayDeaths || 0} />
-        <Card title="Today Cases" value={value?.todayCases || 0} />
-      </Box>
+      <Grid container spacing={3}>
+        <Grid item xs={6} sm={3} xl={3}>
+          <Card title="Total Deaths" value={value?.deaths} />
+        </Grid>
+        <Grid item xs={6} sm={3} xl={3}>
+          <Card title="Total Cases" value={value?.cases} />
+        </Grid>
+        <Grid item xs={6} sm={3} xl={3}>
+          <Card title="Recovered" value={value?.recovered} />
+        </Grid>
+        <Grid item xs={6} sm={3} xl={3}>
+          <Card title="Critical" value={value?.critical} />
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={3} justify="center">
+        <Grid item xs={6} sm={6} xl={3}>
+          <Card title="Today Deaths" value={value?.todayDeaths || 0} />
+        </Grid>
+        <Grid item xs={6} sm={6} xl={3}>
+          <Card title="Today Cases" value={value?.todayCases || 0} />
+        </Grid>
+      </Grid>
     </Box>
   );
 };

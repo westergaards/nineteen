@@ -89,7 +89,11 @@ export const MiniChart = (props: HighchartsReact.Props) => {
   });
   return (
     <Box>
-      <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+      {!chartOptions ? (
+        <Box>foo</Box>
+      ) : (
+        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+      )}
     </Box>
   );
 };

@@ -39,11 +39,11 @@ export const useMiniChartStateStats = createGlobalState<State[]>();
 
 export const MiniChartWrapper = () => {
   return (
-    <Box display="flex" pr={2}>
+    <Box display="flex">
       <Fade in={true} timeout={1000}>
         <Grid container spacing={3}>
           {stateAbbreviations.map((state) => (
-            <Grid item sm={2}>
+            <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={3} style={{ backgroundColor: "#2a2a2b" }}>
                 <MiniChart state={state} />
               </Paper>
