@@ -53,7 +53,7 @@ export const MiniChart = (props: HighchartsReact.Props) => {
   useMount(async () => {
     try {
       let result = await axios.get(
-        `https://v5cf31h8sd.execute-api.us-east-1.amazonaws.com/dev/state/search?state=${props.state}`
+        `https://t5ozqw55je.execute-api.us-east-1.amazonaws.com/dev/state/search?state=${props.state}`
       );
       let states = result.data.message;
       const newOptions = {
