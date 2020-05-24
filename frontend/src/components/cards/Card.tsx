@@ -13,7 +13,6 @@ const useStyles = makeStyles(() => ({
     width: 165,
     textAlign: "center",
     backgroundColor: "transparent",
-    // color: "white",
     fontFamily: "Unica One, sans-serif",
   },
   title: {

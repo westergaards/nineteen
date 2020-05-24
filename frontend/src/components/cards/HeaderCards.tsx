@@ -57,7 +57,7 @@ export const HeaderCards = (props: any) => {
           </Typography>
         </Box>
         <Box>
-          <Typography variant="h6">
+          <Typography className={classes.date}>
             {value && format(new Date(), "MM/dd/yyyy")}
           </Typography>
         </Box>
