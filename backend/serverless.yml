@@ -1,5 +1,7 @@
 service:
   name: backend
+org: westergaards1
+app: covid
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name

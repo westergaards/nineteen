@@ -1,5 +1,7 @@
 service:
   name: jobs
+org: westergaards1
+app: covid
 
 provider:
   name: aws
