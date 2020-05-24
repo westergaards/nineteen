@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import axios from "axios";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
@@ -48,6 +48,7 @@ const options: Highcharts.Options = {
 
 export const MiniChart = (props: HighchartsReact.Props) => {
   const [chartOptions, setChartOptions] = useState(options);
+  const [showChart, setShowChart] = useState(false);
 
   useMount(async () => {
     try {
@@ -68,6 +69,9 @@ export const MiniChart = (props: HighchartsReact.Props) => {
         return [f.datetime, f.positiveIncrease || 0];
       });
 
+      // latest result > or < 10 day average
+      let average = filtered.slice(filtered.length - 11);
+      console.log(average);
       newOptions.series = [
         {
           name: "positiveIncrease",
@@ -83,14 +87,22 @@ export const MiniChart = (props: HighchartsReact.Props) => {
       console.log("states", newOptions);
 
       setChartOptions(newOptions);
+      setShowChart(true);
     } catch (e) {
       console.log("there was an error", e);
     }
   });
   return (
     <Box>
-      {!chartOptions ? (
-        <Box>foo</Box>
+      {!showChart ? (
+        <Box
+          height={300}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <CircularProgress />
+        </Box>
       ) : (
         <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       )}
