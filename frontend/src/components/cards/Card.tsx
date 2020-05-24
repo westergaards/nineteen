@@ -12,8 +12,9 @@ const useStyles = makeStyles(() => ({
   root: {
     width: 165,
     textAlign: "center",
-    backgroundColor: "transparent",
+    backgroundColor: "#000",
     fontFamily: "Unica One, sans-serif",
+    color: "#fff",
   },
   title: {
     fontSize: 18,

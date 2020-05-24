@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("lg")]: {
       // backgroundColor: "#ececec",
     },
+    color: "#fff",
   },
   charts: {
     paddingTop: theme.spacing(2),
@@ -25,11 +26,13 @@ const useStyles = makeStyles((theme) => ({
   date: {
     fontSize: 18,
     fontFamily: "Unica One, sans-serif",
+    color: "#fff",
   },
   country: {
     marginBottom: 12,
     fontFamily: "Unica One, sans-serif",
     fontSize: 44,
+    color: "#fff",
   },
 }));
 

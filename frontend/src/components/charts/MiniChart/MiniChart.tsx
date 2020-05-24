@@ -11,6 +11,7 @@ const options: Highcharts.Options = {
   chart: {
     zoomType: "x",
     height: 300,
+    backgroundColor: "#000",
   },
   title: {
     verticalAlign: "bottom",

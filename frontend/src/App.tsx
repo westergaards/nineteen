@@ -51,7 +51,10 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const darkTheme = createMuiTheme({
     palette: {
-      type: "dark",
+      // type: "dark",
+      background: {
+        default: "#000",
+      },
     },
   });
   const classes = useStyles();
