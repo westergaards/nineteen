@@ -56,10 +56,6 @@ export const MiniChart = (props: HighchartsReact.Props) => {
         `https://t5ozqw55je.execute-api.us-east-1.amazonaws.com/dev/state/search?state=${props.state}`
       );
       let states = result.data.message;
-      const newOptions = {
-        ...chartOptions,
-        title: { ...chartOptions.title, text: props.state },
-      };
 
       let filtered = states
         .filter((s) => s.state === props.state)
@@ -81,6 +77,14 @@ export const MiniChart = (props: HighchartsReact.Props) => {
       let average = arrAvg(averageSlice);
       let lastIndex = positiveIncrease[positiveIncrease.length - 1][1];
       let color = lastIndex > average ? "#e76f51ff" : "#2a9d8f";
+
+      const newOptions = {
+        ...chartOptions,
+        title: {
+          ...chartOptions.title,
+          text: `${props.state} <br /> yesterday / 10 day avg <br />${lastIndex} / ${average} <br /> `,
+        },
+      };
 
       newOptions.series = [
         {
