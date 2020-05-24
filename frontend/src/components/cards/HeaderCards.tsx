@@ -22,6 +22,15 @@ const useStyles = makeStyles((theme) => ({
   charts: {
     paddingTop: theme.spacing(2),
   },
+  date: {
+    fontSize: 18,
+    fontFamily: "Unica One, sans-serif",
+  },
+  country: {
+    marginBottom: 12,
+    fontFamily: "Unica One, sans-serif",
+    fontSize: 44,
+  },
 }));
 
 export const HeaderCards = (props: any) => {
@@ -43,7 +52,7 @@ export const HeaderCards = (props: any) => {
         pb={2}
       >
         <Box>
-          <Typography variant="h4">
+          <Typography className={classes.country}>
             {value?.country} <br />
           </Typography>
         </Box>

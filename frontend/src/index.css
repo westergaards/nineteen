@@ -9,6 +9,10 @@ html {
   line-height: normal;
   text-transform: uppercase;
   color: #e0e0e3;
+  fill: rgb(224, 224, 227);
+  color: rgb(224, 224, 227);
+  font-weight: 400;
+  letter-spacing: 0.14994px;
 }
 
 .element {

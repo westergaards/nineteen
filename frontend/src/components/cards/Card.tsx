@@ -14,12 +14,16 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
     backgroundColor: "transparent",
     // color: "white",
+    fontFamily: "Unica One, sans-serif",
   },
   title: {
-    fontSize: 14,
+    fontSize: 18,
+    fontFamily: "Unica One, sans-serif",
   },
   count: {
     marginBottom: 12,
+    fontFamily: "Unica One, sans-serif",
+    fontSize: 26,
   },
 }));
 
@@ -29,7 +33,7 @@ export const Card = (props: any) => {
   return (
     <MuiCard elevation={3} className={classes.root}>
       <CardContent>
-        <Typography variant="h5" className={classes.count}>
+        <Typography className={classes.count}>
           {props.value === 0 || !props.value ? (
             `0`
           ) : (
