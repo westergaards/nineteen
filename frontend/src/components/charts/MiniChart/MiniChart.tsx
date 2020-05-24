@@ -70,21 +70,30 @@ export const MiniChart = (props: HighchartsReact.Props) => {
       });
 
       // latest result > or < 10 day average
-      let average = filtered.slice(filtered.length - 11);
-      console.log(average);
+      let averageSlice = filtered.slice(
+        filtered.length - 11,
+        filtered.length - 1
+      );
+
+      const arrAvg = (arr) =>
+        arr.reduce((a, b) => a + b.positiveIncrease, 0) / arr.length;
+
+      let average = arrAvg(averageSlice);
+      let lastIndex = positiveIncrease[positiveIncrease.length - 1][1];
+      let color = lastIndex > average ? "#e76f51ff" : "#2a9d8f";
+
       newOptions.series = [
         {
           name: "positiveIncrease",
           type: "spline",
           data: positiveIncrease,
           visible: true,
-          color: "#2a9d8f",
+          color: color,
           lineWidth: 3,
           crisp: false,
           enableMouseTracking: false,
         },
       ];
-      console.log("states", newOptions);
 
       setChartOptions(newOptions);
       setShowChart(true);
