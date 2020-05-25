@@ -10,7 +10,6 @@ export const stateAbbreviations = [
   "DC",
   "FL",
   "GA",
-  "GU",
   "HI",
   "ID",
   "IL",

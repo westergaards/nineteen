@@ -22,6 +22,7 @@ const options: Highcharts.Options = {
   yAxis: {
     gridLineWidth: 0,
     visible: false,
+    min: 0,
   },
   legend: {
     enabled: false,
@@ -83,7 +84,18 @@ export const MiniChart = (props: HighchartsReact.Props) => {
         ...chartOptions,
         title: {
           ...chartOptions.title,
-          text: `${props.state} <br /> yesterday / 10 day avg <br />${lastIndex} / ${average} <br /> `,
+          useHTML: true,
+          text: `<div style="display: flex; flex-direction: column;">
+              <div style="display: flex; font-size: 22px; justify-content: center;">
+                <b>${props.state}</b> 
+              </div>
+              <div style="display: flex; font-size: 18px; justify-content: center; font-weight: 600;"">
+                ${lastIndex} / ${average} 
+              </div>
+              <div style="display: flex; font-size: 14px; justify-content: center; font-weight: 600;">
+                (yesterday vs 10 day avg)
+              </div>
+            </div>`,
         },
       };
 
@@ -114,6 +126,7 @@ export const MiniChart = (props: HighchartsReact.Props) => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          style={{ backgroundColor: "#000" }}
         >
           <CircularProgress />
         </Box>
