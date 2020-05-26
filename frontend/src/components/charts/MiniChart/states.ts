@@ -33,7 +33,6 @@ export const stateAbbreviations = [
   "NY",
   "NC",
   "ND",
-  "MP",
   "OH",
   "OK",
   "OR",
