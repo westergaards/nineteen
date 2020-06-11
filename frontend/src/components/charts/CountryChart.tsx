@@ -3,10 +3,11 @@ import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { CircularProgress, Box } from "@material-ui/core";
 import { byCountryTotalAllStatus } from "../../utils/covidApi";
-import { useCountryStats } from "../../App";
-
+import { useCountryStats, CountryStats } from "../../App";
+import darkUnica from "highcharts/themes/dark-unica";
 import AnnotationsModule from "highcharts/modules/annotations";
 AnnotationsModule(Highcharts);
+darkUnica(Highcharts);
 
 const highChartOptions = Highcharts.getOptions();
 const color =
@@ -14,7 +15,7 @@ const color =
     ? highChartOptions.colors[0]
     : "rgb(255, 255, 255)";
 
-const options = {
+const optionsBack = {
   title: {
     text: "US Deaths by Day",
   },
@@ -75,6 +76,51 @@ const options = {
   ],
 };
 
+const options = {
+  chart: {
+    type: "column",
+    zoomType: "x",
+    height: 300,
+    backgroundColor: "#000",
+  },
+  title: {
+    verticalAlign: "bottom",
+  },
+  xAxis: {
+    type: "datetime",
+  },
+  yAxis: {
+    gridLineWidth: 0,
+    visible: true,
+    min: 0,
+  },
+  legend: {
+    enabled: false,
+  },
+  plotOptions: {
+    series: {
+      pointWidth: 5,
+      borderColor: "#E63946",
+    },
+    // spline: {
+    //   lineWidth: 4,
+    //   marker: {
+    //     enabled: false,
+    //   },
+    // },
+  },
+  tooltip: {
+    pointFormat: "{series.name}: <b>{point.y:,.0f}</b>",
+  },
+  series: [
+    {
+      name: "",
+      data: [] as any,
+      color: "#E63946",
+    },
+  ],
+};
+
 export const CountryChart = () => {
   const [value, setValue] = useCountryStats();
   const [chartOptions, setChartOptions] = useState<any>(null);
@@ -96,11 +142,38 @@ export const CountryChart = () => {
         return [new Date(f.Date).getTime(), f.Deaths];
       });
 
+      let foo = value
+        .filter((a) => a.Date > "2020-03-09T00:00:00Z")
+        .map((a, b, arr) => {
+          // let previousValue = b !== 0 ? (arr[b - 1] as CountryStats) : 0;
+          // let delta: any =
+          //   previousValue === 0 ? 0 : (previousValue.Deaths as CountryStats);
+          let previousDeathValue = 0;
+          let delta = 0;
+
+          if (typeof arr[b - 1] === "object") {
+            previousDeathValue = arr[b - 1].Deaths;
+            let currentDeathValue = arr[b].Deaths;
+            delta =
+              currentDeathValue > previousDeathValue
+                ? currentDeathValue - previousDeathValue
+                : previousDeathValue;
+          }
+
+          return [
+            new Date(a.Date).getTime(),
+            //death: a.Deaths,
+            delta,
+          ];
+        });
+
+      console.log(foo);
+
       newOptions.series = [
         {
           name: "deaths",
-          type: "area",
-          data: series,
+          data: foo,
+          color: "#E63946",
         },
       ];
 
