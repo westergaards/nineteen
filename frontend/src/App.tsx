@@ -9,7 +9,7 @@ import { createGlobalState } from "react-use";
 import { HeaderCards } from "./components/cards/HeaderCards";
 
 import { CountryChartWrapper } from "./components/charts/CountryChartWrapper";
-import { MiniChartWrapper } from "./components/charts/MiniChart/MiniChartWrapper";
+// import { MiniChartWrapper } from "./components/charts/MiniChart/MiniChartWrapper";
 import { BarChartWrapper } from "./components/charts/BarChart/BarChartWrapper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
