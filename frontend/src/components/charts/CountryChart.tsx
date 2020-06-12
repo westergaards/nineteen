@@ -84,7 +84,10 @@ const options = {
     backgroundColor: "#000",
   },
   title: {
-    verticalAlign: "bottom",
+    text: "US Deaths by Day",
+    style: {
+      fontSize: "20px",
+    },
   },
   xAxis: {
     type: "datetime",
@@ -93,6 +96,7 @@ const options = {
     gridLineWidth: 0,
     visible: true,
     min: 0,
+    title: "total",
   },
   legend: {
     enabled: false,
