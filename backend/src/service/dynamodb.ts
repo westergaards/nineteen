@@ -7,7 +7,7 @@ let configurationOptions: ServiceConfigurationOptions = {
 
 console.log('process env', process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'development') {
-  configurationOptions.endpoint = 'http://localhost:8000'
+  //configurationOptions.endpoint = 'http://localhost:8000'
   AWS.config.update(configurationOptions)
 } else {
   AWS.config.update(configurationOptions)
@@ -30,6 +30,40 @@ export const getCovidDataHistorical = async (state: string): Promise<any> => {
     console.log('the params', params)
     let result = await dynamo.query(params).promise()
     return result.Items || []
+  } catch (e) {
+    console.log('there was an error,', e)
+  }
+}
+
+var groupBy = function (xs, key) {
+  return xs.reduce(function (rv, x) {
+    ;(rv[x[key]] = rv[x[key]] || []).push(x)
+    return rv
+  }, {})
+}
+
+export const getCovidDataAllHistorical = async (): Promise<any> => {
+  try {
+    const params = {
+      TableName: 'covid-data',
+      ExclusiveStartKey: null
+    }
+    console.log('the params', params)
+    let results = []
+    let result = await dynamo.scan(params).promise()
+    results = [...result.Items]
+    console.log('results.length', results.length)
+
+    while (result.LastEvaluatedKey) {
+      console.log(result.LastEvaluatedKey)
+      params.ExclusiveStartKey = result.LastEvaluatedKey
+      result = await dynamo.scan(params).promise()
+      results = [...results, ...result.Items]
+      console.log('results.length', results.length)
+    }
+
+    let mappedResults = groupBy(results, 'state')
+    return mappedResults
   } catch (e) {
     console.log('there was an error,', e)
   }

@@ -13,11 +13,15 @@ custom:
 
   covidTableName: covid-data
   covidImportRecordTableName: covid-import-record
+  apiGatewayCaching:
+    enabled: true
+    ttlInSeconds: 3600 # defaults to the maximum allowed: 3600
 
 # Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-api-gateway-caching
 
 provider:
   name: aws
@@ -49,3 +53,12 @@ functions:
           method: get
           path: state/search
           cors: true
+  getStates:
+    handler: src/handler.getStates
+    events:
+      - http:
+          method: get
+          path: states
+          cors: true
+          caching:
+            enabled: true
