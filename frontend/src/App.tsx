@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const [states, setStatesStats] = useStateStats();
   const [, setRegionStats] = useRegionStats();
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [view, setView] = useState(ViewName.REGIONS);
   const darkTheme = createMuiTheme({
     palette: {
@@ -107,7 +107,6 @@ function App() {
   });
 
   const handleClick = (viewValue) => {
-    console.log("view, viewValue", view, viewValue);
     if (viewValue !== view) {
       setView(viewValue);
     }
