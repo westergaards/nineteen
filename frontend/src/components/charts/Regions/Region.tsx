@@ -22,11 +22,11 @@ const options = {
   },
   yAxis: {
     gridLineWidth: 0,
-    visible: false,
+    visible: true,
     min: 0,
   },
   legend: {
-    enabled: false,
+    enabled: true,
   },
   plotOptions: {
     // spline: {
@@ -46,6 +46,7 @@ const options = {
       color: "",
       pointWidth: 20,
       borderColor: "",
+      type: "",
     },
   ],
 };
@@ -54,6 +55,8 @@ export const Region = ({
   name,
   lastIndex,
   positiveIncrease,
+  hospitialized,
+  death,
   color,
   average,
 }) => {
@@ -84,10 +87,27 @@ export const Region = ({
 
       newOptions.series = [
         {
-          name: name,
+          name: "positive",
+          type: "spline",
           data: positiveIncrease,
           color: color,
           borderColor: color,
+          pointWidth: 2,
+        },
+        {
+          name: "hospitialized",
+          type: "line",
+          data: hospitialized,
+          color: "#e9c46aff",
+          borderColor: "#e9c46aff",
+          pointWidth: 2,
+        },
+        {
+          name: "death",
+          type: "spline",
+          data: death,
+          color: "#f4a261ff",
+          borderColor: "#f4a261ff",
           pointWidth: 2,
         },
       ];

@@ -4,21 +4,9 @@ import { Box, Grid, Fade } from "@material-ui/core";
 import { useRegionStats } from "../../../App";
 import { Region } from "./Region";
 
-const mappedRegions = (states) => {
-  let updated = [];
-  Object.keys(states).forEach((key) => {
-    updated = [...updated, ...states[key]];
-  });
-
-  updated = updated.sort((a, b) => a.datetime - b.datetime);
-
-  let positiveIncrease = updated.map((item) => [
-    item.datetime,
-    item.positiveIncrease || 0,
-  ]);
-
-  positiveIncrease = Object.values(
-    positiveIncrease.reduce((prev, curr, index, arr) => {
+const aggregateTotals = (arrToReduce) => {
+  return Object.values(
+    arrToReduce.reduce((prev, curr, index, arr) => {
       if (prev[arr[index][0]] && prev[arr[index][0]][0] === curr[0]) {
         prev[arr[index][0]][1] = prev[arr[index][0]][1] + curr[1];
       } else {
@@ -27,22 +15,57 @@ const mappedRegions = (states) => {
       return prev;
     }, [])
   );
+};
 
-  console.log("po", positiveIncrease);
-  let averageSlice = positiveIncrease.slice(
-    positiveIncrease.length - 11,
-    positiveIncrease.length - 1
+const mappedRegions = (states) => {
+  let updated = [];
+  Object.keys(states).forEach((key) => {
+    updated = [...updated, ...states[key]];
+  });
+
+  updated = updated.sort((a, b) => a.datetime - b.datetime);
+
+  //#region Positive Increase
+  let positiveIncrease = updated.map((item) => [
+    item.datetime,
+    item.positiveIncrease || 0,
+  ]);
+
+  let positiveIncreaseAggregated = aggregateTotals(positiveIncrease);
+
+  let averageSlice = positiveIncreaseAggregated.slice(
+    positiveIncreaseAggregated.length - 11,
+    positiveIncreaseAggregated.length - 1
   );
 
-  console.log("as", averageSlice);
   const arrAvg = (arr) =>
     arr.reduce((a: any, b: any) => a + b[1], 0) / arr.length;
 
   let average = arrAvg(averageSlice);
-  let lastIndex = positiveIncrease[positiveIncrease.length - 1][1];
+  let lastIndex =
+    positiveIncreaseAggregated[positiveIncreaseAggregated.length - 1][1];
   let color = lastIndex > average ? "#E63946" : "#06d6a0";
+  //#endregion
 
-  return { average, color, lastIndex, positiveIncrease };
+  let hospitalized = updated.map((item) => [
+    item.datetime,
+    item.hospitalizedIncrease || 0,
+  ]);
+
+  let hospitalizedAggregated = aggregateTotals(hospitalized);
+
+  let death = updated.map((item) => [item.datetime, item.deathIncrease || 0]);
+
+  let deathAggregated = aggregateTotals(death);
+
+  return {
+    average,
+    color,
+    lastIndex,
+    positiveIncreaseAggregated,
+    hospitalizedAggregated,
+    deathAggregated,
+  };
 };
 
 export const RegionsWrapper = () => {
@@ -71,9 +94,13 @@ export const RegionsWrapper = () => {
                   key={region}
                   name={region}
                   lastIndex={mappedRegion[region].lastIndex}
-                  positiveIncrease={mappedRegion[region].positiveIncrease}
+                  positiveIncrease={
+                    mappedRegion[region].positiveIncreaseAggregated
+                  }
                   color={mappedRegion[region].color}
                   average={mappedRegion[region].average}
+                  hospitialized={mappedRegion[region].hospitalizedAggregated}
+                  death={mappedRegion[region].deathAggregated}
                 />
               </Grid>
             ))}
