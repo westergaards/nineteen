@@ -49,10 +49,10 @@ export const getCovidDataAllHistorical = async (): Promise<any> => {
       ExpressionAttributeNames: {
         '#state': 'state',
         '#date': 'date',
-        '#dateTime': 'datetime'
+        '#datetime': 'datetime'
       },
       ProjectionExpression:
-        '#state, #date, dateString, #datetime, deathIncrease, positiveIncrease, hospitalizedIncrease',
+        '#state, #date, #datetime, deathIncrease, positiveIncrease, hospitalizedIncrease',
       ExclusiveStartKey: null
     }
     console.log('the params', params)
