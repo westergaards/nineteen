@@ -148,6 +148,7 @@ export const CountryChart = () => {
 
       let series = value
         .filter((a) => a.Date > "2020-03-09T00:00:00Z")
+        .filter((a) => a.Deaths !== 0)
         .map((a, b, arr) => {
           // let previousValue = b !== 0 ? (arr[b - 1] as CountryStats) : 0;
           // let delta: any =
@@ -158,6 +159,9 @@ export const CountryChart = () => {
           if (typeof arr[b - 1] === "object") {
             previousDeathValue = arr[b - 1].Deaths;
             let currentDeathValue = arr[b].Deaths;
+            if (currentDeathValue === 0) {
+              console.log("here");
+            }
             delta =
               currentDeathValue > previousDeathValue
                 ? currentDeathValue - previousDeathValue
@@ -180,6 +184,7 @@ export const CountryChart = () => {
       ];
 
       setChartOptions(newOptions);
+      console.log("the series", series);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
