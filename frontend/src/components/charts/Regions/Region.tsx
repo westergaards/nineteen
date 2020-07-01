@@ -64,7 +64,6 @@ export const Region = ({
   const [showChart, setShowChart] = useState(false);
 
   useEffect(() => {
-    console.log("increase", positiveIncrease);
     if (positiveIncrease) {
       const newOptions = {
         ...chartOptions,

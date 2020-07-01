@@ -20,13 +20,28 @@ const options = {
   xAxis: {
     type: "datetime",
   },
-  yAxis: {
-    gridLineWidth: 0,
-    visible: false,
-    min: 0,
-  },
+  yAxis: [
+    {
+      gridLineWidth: 0,
+      visible: false,
+      min: 0,
+      text: "p",
+    },
+    {
+      gridLineWidth: 0,
+      visible: false,
+      min: 0,
+      text: "t",
+    },
+    {
+      gridLineWidth: 0,
+      visible: false,
+      min: 0,
+      text: "pe",
+    },
+  ],
   legend: {
-    enabled: false,
+    enabled: true,
   },
   plotOptions: {
     // spline: {
@@ -46,6 +61,10 @@ const options = {
       color: "",
       pointWidth: 20,
       borderColor: "",
+      type: "",
+      yAxis: 0,
+      opacity: 1,
+      visible: false,
     },
   ],
 };
@@ -65,8 +84,25 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
         (a, b) => a.datetime - b.datetime
       );
 
+      /* redo this */
+      let totalTestResultsIncrease = filtered.map((f) => {
+        return [f.datetime, f.totalTestResultsIncrease || 0];
+      });
+
       let positiveIncrease = filtered.map((f) => {
         return [f.datetime, f.positiveIncrease || 0];
+      });
+
+      let percentPositive = totalTestResultsIncrease.map((testIncrease) => {
+        let percent = 0;
+        let matchingPositiveIncrease = positiveIncrease.find(
+          (positive) => positive[0] === testIncrease[0]
+        );
+
+        if (matchingPositiveIncrease) {
+          percent = (matchingPositiveIncrease[1] / testIncrease[1]) * 100;
+        }
+        return [testIncrease[0], percent];
       });
 
       // // latest result > or < 10 day average
@@ -103,11 +139,37 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
 
       newOptions.series = [
         {
-          name: props.state,
+          name: "positive",
+          type: "line",
           data: positiveIncrease,
           color: color,
           borderColor: color,
           pointWidth: 2,
+          yAxis: 0,
+          opacity: 1,
+          visible: false,
+        },
+        {
+          name: "tests",
+          type: "column",
+          data: totalTestResultsIncrease,
+          color: "#c3c3c3",
+          borderColor: "#c3c3c3",
+          opacity: 0.5,
+          pointWidth: 2,
+          yAxis: 1,
+          visible: true,
+        },
+        {
+          name: "% positive",
+          type: "spline",
+          data: percentPositive,
+          color: "#f4a261ff",
+          borderColor: "#f4a261ff",
+          pointWidth: 2,
+          yAxis: 2,
+          opacity: 1,
+          visible: true,
         },
       ];
       // newOptions.series = [

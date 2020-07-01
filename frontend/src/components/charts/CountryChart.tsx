@@ -184,7 +184,6 @@ export const CountryChart = () => {
       ];
 
       setChartOptions(newOptions);
-      console.log("the series", series);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
