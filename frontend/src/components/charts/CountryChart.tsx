@@ -142,17 +142,11 @@ export const CountryChart = () => {
   useEffect(() => {
     if (value) {
       const newOptions = { ...options };
-      // let series = value.map((f) => {
-      //   return [new Date(f.Date).getTime(), f.Deaths];
-      // });
 
       let series = value
         .filter((a) => a.Date > "2020-03-09T00:00:00Z")
         .filter((a) => a.Deaths !== 0)
         .map((a, b, arr) => {
-          // let previousValue = b !== 0 ? (arr[b - 1] as CountryStats) : 0;
-          // let delta: any =
-          //   previousValue === 0 ? 0 : (previousValue.Deaths as CountryStats);
           let previousDeathValue = 0;
           let delta = 0;
 
@@ -168,11 +162,7 @@ export const CountryChart = () => {
                 : previousDeathValue;
           }
 
-          return [
-            new Date(a.Date).getTime(),
-            //death: a.Deaths,
-            delta,
-          ];
+          return [new Date(a.Date).getTime(), delta];
         });
 
       newOptions.series = [

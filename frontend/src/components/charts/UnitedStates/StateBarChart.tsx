@@ -43,14 +43,7 @@ const options = {
   legend: {
     enabled: true,
   },
-  plotOptions: {
-    // spline: {
-    //   lineWidth: 4,
-    //   marker: {
-    //     enabled: false,
-    //   },
-    // },
-  },
+  plotOptions: {},
   tooltip: {
     pointFormat: "{series.name}: <b>{point.y:,.0f}</b>",
   },
@@ -75,34 +68,25 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
   const [states] = useStateStats();
 
   useEffect(() => {
-    console.log("states", states);
     if (states[props.state]) {
-      console.log("states", states);
-      console.log(states[props.state]);
-
       let filtered = states[props.state].sort(
         (a, b) => a.datetime - b.datetime
       );
 
       /* redo this */
-      let totalTestResultsIncrease = filtered.map((f) => {
-        return [f.datetime, f.totalTestResultsIncrease || 0];
-      });
 
-      let positiveIncrease = filtered.map((f) => {
-        return [f.datetime, f.positiveIncrease || 0];
-      });
-
-      let percentPositive = totalTestResultsIncrease.map((testIncrease) => {
-        let percent = 0;
-        let matchingPositiveIncrease = positiveIncrease.find(
-          (positive) => positive[0] === testIncrease[0]
-        );
-
-        if (matchingPositiveIncrease) {
-          percent = (matchingPositiveIncrease[1] / testIncrease[1]) * 100;
-        }
-        return [testIncrease[0], percent];
+      let data = filtered.map((f) => {
+        return {
+          totalTestResultsIncrease: [
+            f.datetime,
+            f.totalTestResultsIncrease || 0,
+          ],
+          positiveIncrease: [f.datetime, f.positiveIncrease || 0],
+          percentIncrease: [
+            f.datetime,
+            (f.positiveIncrease / f.totalTestResultsIncrease) * 100,
+          ],
+        };
       });
 
       // // latest result > or < 10 day average
@@ -115,7 +99,7 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
         arr.reduce((a, b) => a + b.positiveIncrease, 0) / arr.length;
 
       let average = arrAvg(averageSlice);
-      let lastIndex = positiveIncrease[positiveIncrease.length - 1][1];
+      let lastIndex = data[data.length - 1].positiveIncrease[1];
       let color = lastIndex > average ? "#E63946" : "#06d6a0";
 
       const newOptions = {
@@ -141,7 +125,7 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
         {
           name: "positive",
           type: "line",
-          data: positiveIncrease,
+          data: data.map((f) => f.positiveIncrease),
           color: color,
           borderColor: color,
           pointWidth: 2,
@@ -152,7 +136,7 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
         {
           name: "tests",
           type: "column",
-          data: totalTestResultsIncrease,
+          data: data.map((f) => f.totalTestResultsIncrease),
           color: "#c3c3c3",
           borderColor: "#c3c3c3",
           opacity: 0.5,
@@ -163,7 +147,7 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
         {
           name: "% positive",
           type: "spline",
-          data: percentPositive,
+          data: data.map((f) => f.percentIncrease),
           color: "#f4a261ff",
           borderColor: "#f4a261ff",
           pointWidth: 2,
@@ -172,18 +156,6 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
           visible: true,
         },
       ];
-      // newOptions.series = [
-      //   {
-      //     name: "positiveIncrease",
-      //     // type: "spline",
-      //     data: positiveIncrease,
-      //     visible: true,
-      //     color: "#E63946",
-      //     lineWidth: 3,
-      //     crisp: false,
-      //     enableMouseTracking: false,
-      //   },
-      // ];
 
       setChartOptions(newOptions);
       setShowChart(true);

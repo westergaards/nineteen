@@ -28,14 +28,7 @@ const options = {
   legend: {
     enabled: true,
   },
-  plotOptions: {
-    // spline: {
-    //   lineWidth: 4,
-    //   marker: {
-    //     enabled: false,
-    //   },
-    // },
-  },
+  plotOptions: {},
   tooltip: {
     pointFormat: "{series.name}: <b>{point.y:,.0f}</b>",
   },
