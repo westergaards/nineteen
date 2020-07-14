@@ -30,6 +30,7 @@ const useStyles = makeStyles(() => ({
 export const Card = (props: any) => {
   const classes = useStyles();
   const format = (number) => numeral(number).format("0,0");
+
   return (
     <MuiCard elevation={3} className={classes.root}>
       <CardContent>

@@ -14,6 +14,7 @@ import { HeaderCards } from "./components/cards/HeaderCards";
 import { CountryChartWrapper } from "./components/charts/CountryChartWrapper";
 // import { MiniChartWrapper } from "./components/charts/MiniChart/MiniChartWrapper";
 import { StatesChartWrapper } from "./components/charts/UnitedStates/StatesChartWrapper";
+import { HospitalChartWrapper } from "./components/charts/Hospital/HospitalChartWrapper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ButtonBar } from "./components/cards";
 import { RegionsWrapper } from "./components/charts/Regions";
@@ -35,8 +36,9 @@ export interface CountryStats {
 }
 
 export enum ViewName {
-  REGIONS,
-  STATES,
+  REGIONS = "REGIONS",
+  STATES = "STATES",
+  HOSPITAL = "HOSPITAL",
 }
 
 export const useCountryStats = createGlobalState<CountryStats[]>();
@@ -94,7 +96,12 @@ function App() {
       Object.keys(results).forEach((result) => {
         let regionForState = REGIONS[result];
 
-        if (!["AS", "GU", "MH", "MP", "PW", "PR", "VI"].includes(result)) {
+        //if (!["AS", "GU", "MH", "MP", "PW", "PR", "VI"].includes(result)) {
+        if (
+          ["WA", "OR", "CA", "NV", "AZ", "NY", "NJ", "FL", "KS", "OK"].includes(
+            result
+          )
+        ) {
           mappedRegions[regionForState] = {
             ...mappedRegions[regionForState],
             [result]: results[result],
@@ -121,23 +128,21 @@ function App() {
         className={classes.root}
         direction="column"
       >
-        <Grid item justify="center" className={classes.header}>
+        <Grid container justify="center" className={classes.header}>
           <HeaderCards />
         </Grid>
         <Grid item>
           <ButtonBar onClick={handleClick} />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item>
           <CountryChartWrapper />
           {loading ? (
             <CircularProgress />
           ) : (
             <div>
-              {view === ViewName.REGIONS ? (
-                <RegionsWrapper />
-              ) : (
-                <StatesChartWrapper />
-              )}
+              {view === ViewName.REGIONS && <RegionsWrapper />}
+              {view === ViewName.STATES && <StatesChartWrapper />}
+              {view === ViewName.HOSPITAL && <HospitalChartWrapper />}
             </div>
           )}
         </Grid>

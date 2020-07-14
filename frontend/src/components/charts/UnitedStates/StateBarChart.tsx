@@ -4,7 +4,9 @@ import { Box, CircularProgress } from "@material-ui/core";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import darkUnica from "highcharts/themes/dark-unica";
+import numeral from "numeral";
 import { useStateStats } from "../../../App";
+
 darkUnica(Highcharts);
 
 const options = {
@@ -29,7 +31,7 @@ const options = {
     },
     {
       gridLineWidth: 0,
-      visible: false,
+      visible: true,
       min: 0,
       text: "t",
     },
@@ -74,7 +76,6 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
       );
 
       /* redo this */
-
       let data = filtered.map((f) => {
         return {
           totalTestResultsIncrease: [
@@ -84,23 +85,25 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
           positiveIncrease: [f.datetime, f.positiveIncrease || 0],
           percentIncrease: [
             f.datetime,
-            (f.positiveIncrease / f.totalTestResultsIncrease) * 100,
+            f.positiveIncrease > 0
+              ? (f.positiveIncrease / f.totalTestResultsIncrease) * 100
+              : 0,
           ],
         };
       });
 
-      // // latest result > or < 10 day average
-      let averageSlice = filtered.slice(
-        filtered.length - 11,
-        filtered.length - 1
-      );
+      let averageSlice = data.slice(filtered.length - 11, filtered.length - 1);
 
       const arrAvg = (arr) =>
-        arr.reduce((a, b) => a + b.positiveIncrease, 0) / arr.length;
+        arr.reduce((a, b) => a + b.positiveIncrease[1], 0) / arr.length;
+
+      const percentAvg = (arr) =>
+        arr.reduce((a, b) => a + b.percentIncrease[1], 0) / arr.length;
 
       let average = arrAvg(averageSlice);
       let lastIndex = data[data.length - 1].positiveIncrease[1];
       let color = lastIndex > average ? "#E63946" : "#06d6a0";
+      let percentAverage = numeral(percentAvg(averageSlice)).format("0.[00]");
 
       const newOptions = {
         ...chartOptions,
@@ -112,10 +115,10 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
                 <b>${props.state}</b>
               </div>
               <div style="display: flex; font-size: 18px; justify-content: center; font-weight: 600;"">
-              ${lastIndex} / ${average}
+              ${lastIndex} / ${average} / ${percentAverage}%
               </div>
               <div style="display: flex; font-size: 14px; justify-content: center; font-weight: 600;">
-                (yesterday vs 10 day avg)
+                (yesterday vs 10 day avg) / percent positive
               </div>
             </div>`,
         },
@@ -131,7 +134,7 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
           pointWidth: 2,
           yAxis: 0,
           opacity: 1,
-          visible: false,
+          visible: true,
         },
         {
           name: "tests",

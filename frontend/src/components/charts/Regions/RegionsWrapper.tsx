@@ -89,7 +89,7 @@ export const RegionsWrapper = () => {
         <Grid container spacing={3}>
           {mappedRegion &&
             Object.keys(mappedRegion).map((region) => (
-              <Grid item xs={12} sm={12} md={12} lg={6}>
+              <Grid item xs={12} sm={12} md={12} lg={6} key={region}>
                 <Region
                   key={region}
                   name={region}

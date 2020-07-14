@@ -10,3 +10,7 @@
   border: 1px solid white !important;
   color: white !important;
 }
+
+.button.active {
+  background-color: green !important;
+}
