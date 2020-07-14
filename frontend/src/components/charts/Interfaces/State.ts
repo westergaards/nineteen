@@ -1,0 +1,30 @@
+export interface State {
+  dataQualityGrade: string;
+  date: string;
+  dateChecked: string;
+  datetime: number;
+  death: number;
+  deathIncrease: number;
+  fips: string;
+  hash: string;
+  hospitalized: null;
+  hospitalizedCumulative: null;
+  hospitalizedCurrently: number;
+  hospitalizedIncrease: number;
+  inIcuCumulative: null;
+  inIcuCurrently: number;
+  lastUpdateEt: string;
+  negative: number;
+  negativeIncrease: number;
+  onVentilatorCumulative: null;
+  onVentilatorCurrently: null;
+  pending: null;
+  posNeg: number;
+  positive: number;
+  positiveIncrease: number;
+  recovered: null;
+  state: string;
+  total: number;
+  totalTestResults: number;
+  totalTestResultsIncrease: number;
+}
