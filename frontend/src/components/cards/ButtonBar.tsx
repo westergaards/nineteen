@@ -18,7 +18,8 @@ export const ButtonBar = ({ onClick }) => {
           id="regions"
           variant="contained"
           onClick={() => handleClick(ViewName.REGIONS)}
-          className={`button ${selected === 'regions' ? 'active' : null}`}
+          // className={`button ${selected === 'regions' ? 'active' : null}`}
+          color={selected === 'regions' ? 'primary' : 'default'}
         >
           Regions
         </Button>
@@ -28,7 +29,7 @@ export const ButtonBar = ({ onClick }) => {
           id="states"
           variant="contained"
           onClick={() => handleClick(ViewName.STATES)}
-          className={`button ${selected === 'states' ? 'active' : null}`}
+          color={selected === 'states' ? 'primary' : 'default'}
         >
           States
         </Button>
@@ -38,7 +39,7 @@ export const ButtonBar = ({ onClick }) => {
           id="hospital"
           variant="contained"
           onClick={() => handleClick(ViewName.HOSPITAL)}
-          className={`button ${selected === 'hospital' ? 'active' : null}`}
+          color={selected === 'hospital' ? 'primary' : 'default'}
         >
           Hospital
         </Button>

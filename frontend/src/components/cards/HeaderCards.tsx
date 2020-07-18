@@ -1,50 +1,50 @@
-import React, { useState } from "react";
-import { Typography, Grid, makeStyles } from "@material-ui/core";
-import { useMount } from "react-use";
-import { format } from "date-fns";
-import { Card } from "./Card";
-import { getCountrySummaryStatsToday } from "../../utils/novelApi";
-import { Country } from "../../utils/interfaces/country.model";
+import React, { useState } from 'react'
+import { Typography, Grid, makeStyles } from '@material-ui/core'
+import { useMount } from 'react-use'
+import { format } from 'date-fns'
+import { Card } from './Card'
+import { getCountrySummaryStatsToday } from '../../utils/novelApi'
+import { Country } from '../../utils/interfaces/country.model'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       // backgroundColor: theme.palette.secondary.main,
     },
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up('md')]: {
       // backgroundColor: theme.palette.primary.main,
     },
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up('lg')]: {
       // backgroundColor: "#ececec",
     },
-    color: "#fff",
-    alignSelf: "center",
+    color: '#fff',
+    alignSelf: 'center'
   },
   charts: {
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(2)
   },
   date: {
     fontSize: 18,
-    fontFamily: "Unica One, sans-serif",
-    color: "#fff",
+    fontFamily: 'Unica One, sans-serif',
+    color: '#fff'
   },
   country: {
     marginBottom: 12,
-    fontFamily: "Unica One, sans-serif",
+    fontFamily: 'Unica One, sans-serif',
     fontSize: 44,
-    color: "#fff",
-  },
-}));
+    color: '#fff'
+  }
+}))
 
 export const HeaderCards = (props: any) => {
-  const [value, setValue] = useState<Country>();
-  const classes = useStyles();
+  const [value, setValue] = useState<Country>()
+  const classes = useStyles()
 
   useMount(async () => {
-    const result = await getCountrySummaryStatsToday();
-    setValue(result);
-  });
+    const result = await getCountrySummaryStatsToday()
+    setValue(result)
+  })
 
   return (
     <Grid container>
@@ -56,22 +56,22 @@ export const HeaderCards = (props: any) => {
         </Grid>
         <Grid item>
           <Typography className={classes.date} component="div">
-            {value && format(new Date(), "MM/dd/yyyy")}
+            {value && format(new Date(), 'MM/dd/yyyy')}
           </Typography>
         </Grid>
       </Grid>
 
       <Grid container alignItems="center">
-        <Grid item xs={12} sm={3} xl={3}>
+        <Grid item xs={6} sm={3} xl={3}>
           <Card title="Total Deaths" value={value?.deaths} />
         </Grid>
-        <Grid item xs={12} sm={3} xl={3}>
+        <Grid item xs={6} sm={3} xl={3}>
           <Card title="Total Cases" value={value?.cases} />
         </Grid>
-        <Grid item xs={12} sm={3} xl={3}>
+        <Grid item xs={6} sm={3} xl={3}>
           <Card title="Recovered" value={value?.recovered} />
         </Grid>
-        <Grid item xs={12} sm={3} xl={3}>
+        <Grid item xs={6} sm={3} xl={3}>
           <Card title="Critical" value={value?.critical} />
         </Grid>
       </Grid>
@@ -85,5 +85,5 @@ export const HeaderCards = (props: any) => {
         </Grid>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
