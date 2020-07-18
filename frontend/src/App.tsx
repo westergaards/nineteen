@@ -57,8 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up('lg')]: {
       //  backgroundColor: "#ececec",
-    },
-    alignSelf: 'center'
+    }
   }
 }))
 

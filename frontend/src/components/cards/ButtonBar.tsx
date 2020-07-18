@@ -12,7 +12,7 @@ export const ButtonBar = ({ onClick }) => {
   }
 
   return (
-    <Grid container justify="center" spacing={2}>
+    <Grid container spacing={2} alignItems="center" justify="center">
       <Grid item>
         <Button
           id="regions"

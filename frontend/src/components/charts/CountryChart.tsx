@@ -1,156 +1,153 @@
-import React, { useEffect, useState } from "react";
-import * as Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { CircularProgress, Box } from "@material-ui/core";
-import { byCountryTotalAllStatus } from "../../utils/covidApi";
-import { useCountryStats } from "../../App";
-import darkUnica from "highcharts/themes/dark-unica";
-import AnnotationsModule from "highcharts/modules/annotations";
+import React, { useEffect, useState } from 'react'
+import * as Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
+import { CircularProgress, Box } from '@material-ui/core'
+import { byCountryTotalAllStatus } from '../../utils/covidApi'
+import { useCountryStats } from '../../App'
+import darkUnica from 'highcharts/themes/dark-unica'
+import AnnotationsModule from 'highcharts/modules/annotations'
 
-AnnotationsModule(Highcharts);
-darkUnica(Highcharts);
+AnnotationsModule(Highcharts)
+darkUnica(Highcharts)
 
 const options = {
   chart: {
-    type: "column",
-    zoomType: "x",
+    type: 'column',
+    zoomType: 'x',
     height: 300,
-    backgroundColor: "#000",
+    backgroundColor: '#000'
   },
   title: {
-    text: "US Deaths by Day",
+    text: 'US Deaths by Day',
     style: {
-      fontSize: "20px",
-    },
+      fontSize: '20px'
+    }
   },
   xAxis: {
-    type: "datetime",
+    type: 'datetime'
   },
   yAxis: {
     gridLineWidth: 0,
     visible: true,
     min: 0,
-    title: "total",
+    title: 'total'
   },
   legend: {
-    enabled: true,
+    enabled: true
   },
   plotOptions: {
-    series: {
-      pointWidth: 5,
-      borderColor: "#E63946",
-    },
+    spline: {
+      lineWidth: 4,
+      marker: {
+        enabled: false
+      }
+    }
   },
   tooltip: {
-    pointFormat: "{series.name}: <b>{point.y:,.0f}</b>",
+    pointFormat: '{series.name}: <b>{point.y:,.0f}</b>'
   },
   series: [
     {
-      name: "",
+      name: '',
       data: [] as any,
-      color: "#E63946",
-      borderColor: "",
+      color: '#E63946',
+      borderColor: '',
       visible: true,
-      type: "",
+      type: '',
       opacity: 1,
-      pointWidth: 2,
-    },
-  ],
-};
+      pointWidth: 2
+    }
+  ]
+}
 
 export const CountryChart = () => {
-  const [value, setValue] = useCountryStats();
-  const [chartOptions, setChartOptions] = useState<any>(null);
+  const [value, setValue] = useCountryStats()
+  const [chartOptions, setChartOptions] = useState<any>(null)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const fetchData = async () => {
-      const result = await byCountryTotalAllStatus();
-      setValue(result.data);
-    };
+      const result = await byCountryTotalAllStatus()
+      setValue(result.data)
+    }
 
-    fetchData();
-  }, [setValue]);
+    fetchData()
+  }, [setValue])
 
   useEffect(() => {
     if (value) {
-      const newOptions = { ...options };
+      const newOptions = { ...options }
 
       let series = value
-        .filter((a) => a.Date > "2020-03-09T00:00:00Z")
+        .filter((a) => a.Date > '2020-03-09T00:00:00Z')
         .filter((a) => a.Deaths !== 0)
         .map((a, b, arr) => {
-          let previousDeathValue = 0;
-          let previousConfirmedValue = 0;
-          let deathDelta = 0;
-          let confirmedDelta = 0;
+          let previousDeathValue = 0
+          let previousConfirmedValue = 0
+          let deathDelta = 0
+          let confirmedDelta = 0
 
-          if (typeof arr[b - 1] === "object") {
-            previousDeathValue = arr[b - 1].Deaths;
-            previousConfirmedValue = arr[b - 1].Confirmed;
+          if (typeof arr[b - 1] === 'object') {
+            previousDeathValue = arr[b - 1].Deaths
+            previousConfirmedValue = arr[b - 1].Confirmed
 
-            let currentDeathValue = arr[b].Deaths;
-            let currentConfirmedValue = arr[b].Confirmed;
+            let currentDeathValue = arr[b].Deaths
+            let currentConfirmedValue = arr[b].Confirmed
 
             deathDelta =
               currentDeathValue > previousDeathValue
                 ? currentDeathValue - previousDeathValue
-                : previousDeathValue;
+                : previousDeathValue
 
             confirmedDelta =
               currentConfirmedValue > previousConfirmedValue
                 ? currentConfirmedValue - previousConfirmedValue
-                : previousConfirmedValue;
+                : previousConfirmedValue
           }
 
           return {
             death: [new Date(a.Date).getTime(), deathDelta],
-            positive: [new Date(a.Date).getTime(), confirmedDelta],
-          };
-        });
+            positive: [new Date(a.Date).getTime(), confirmedDelta]
+          }
+        })
 
       newOptions.series = [
         {
-          name: "deaths",
+          name: 'deaths',
+          type: 'spline',
           data: series.map((d) => d.death),
-          type: "spline",
-          color: "#E63946",
-          borderColor: "#E63946",
+          color: '#E63946',
+          borderColor: '#E63946',
           opacity: 1,
           pointWidth: 2,
-          visible: true,
+          visible: true
         },
         {
-          name: "positive",
+          name: 'positive',
+          type: 'column',
           data: series.map((d) => d.positive),
-          type: "column",
-          color: "#c3c3c3",
-          borderColor: "#c3c3c3",
+          color: '#c3c3c3',
+          borderColor: '#c3c3c3',
           opacity: 0.5,
           pointWidth: 2,
-          visible: true,
-        },
-      ];
+          visible: true
+        }
+      ]
 
-      setChartOptions(newOptions);
+      setChartOptions(newOptions)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [value])
 
   return (
     <Box pt={2}>
       {!chartOptions ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          style={{ height: "316px" }}
-        >
+        <Box display="flex" justifyContent="center" alignItems="center" style={{ height: '316px' }}>
           <CircularProgress />
         </Box>
       ) : (
         <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       )}
     </Box>
-  );
-};
+  )
+}

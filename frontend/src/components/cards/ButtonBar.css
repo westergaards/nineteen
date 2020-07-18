@@ -1,10 +1,4 @@
-.button-container {
-  display: flex;
-  justify-content: center;
-  padding: 40px 10px;
-}
-
-.button {
+/* .button {
   margin: 0 15px !important;
   background-color: black !important;
   border: 1px solid white !important;
@@ -13,4 +7,4 @@
 
 .button.active {
   background-color: green !important;
-}
+} */
