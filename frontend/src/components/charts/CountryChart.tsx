@@ -112,7 +112,7 @@ export const CountryChart = () => {
         {
           name: "deaths",
           data: series.map((d) => d.death),
-          type: "line",
+          type: "spline",
           color: "#E63946",
           borderColor: "#E63946",
           opacity: 1,
