@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("lg")]: {
       //  backgroundColor: "#ececec",
     },
+    alignSelf: "center",
   },
   charts: {
     paddingTop: theme.spacing(2),
@@ -122,22 +123,21 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Grid
-        container
-        justify="center"
-        className={classes.root}
-        direction="column"
-      >
-        <Grid container justify="center" className={classes.header}>
+      <Grid container justify="center" direction="column">
+        <Grid container className={classes.root}>
           <HeaderCards />
         </Grid>
-        <Grid item>
+
+        <Grid container justify="center">
           <ButtonBar onClick={handleClick} />
         </Grid>
+
         <Grid item>
           <CountryChartWrapper />
           {loading ? (
-            <CircularProgress />
+            <Grid item>
+              <CircularProgress />
+            </Grid>
           ) : (
             <div>
               {view === ViewName.REGIONS && <RegionsWrapper />}

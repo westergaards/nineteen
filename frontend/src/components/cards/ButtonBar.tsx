@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { ViewName } from "../../App";
 import "./ButtonBar.css";
 
@@ -12,7 +12,7 @@ export const ButtonBar = ({ onClick }) => {
   };
 
   return (
-    <div className="button-container">
+    <Grid item>
       <Button
         id="regions"
         variant="contained"
@@ -39,6 +39,6 @@ export const ButtonBar = ({ onClick }) => {
       >
         Hospitalization
       </Button>
-    </div>
+    </Grid>
   );
 };

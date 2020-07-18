@@ -10,7 +10,7 @@ import numeral from "numeral";
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: 165,
+    // width: 165,
     textAlign: "center",
     backgroundColor: "#000",
     fontFamily: "Unica One, sans-serif",

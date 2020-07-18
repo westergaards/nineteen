@@ -6,75 +6,9 @@ import { byCountryTotalAllStatus } from "../../utils/covidApi";
 import { useCountryStats } from "../../App";
 import darkUnica from "highcharts/themes/dark-unica";
 import AnnotationsModule from "highcharts/modules/annotations";
+
 AnnotationsModule(Highcharts);
 darkUnica(Highcharts);
-
-// const highChartOptions = Highcharts.getOptions();
-// const color =
-//   highChartOptions && Array.isArray(highChartOptions.colors)
-//     ? highChartOptions.colors[0]
-//     : "rgb(255, 255, 255)";
-
-// const optionsBack = {
-//   title: {
-//     text: "US Deaths by Day",
-//   },
-//   chart: {
-//     zoomType: "x",
-//   },
-//   xAxis: {
-//     type: "datetime",
-//   },
-//   yAxis: {
-//     title: {
-//       text: "Deaths",
-//     },
-//     min: 0,
-//   },
-//   legend: {
-//     enabled: false,
-//   },
-
-//   annotations: [
-//     {
-//       labels: [] as any,
-//     },
-//   ],
-//   plotOptions: {
-//     area: {
-//       fillColor: {
-//         linearGradient: {
-//           x1: 0,
-//           y1: 0,
-//           x2: 0,
-//           y2: 1,
-//         },
-//         stops: [
-//           [0, color],
-//           [1, Highcharts.color(color).setOpacity(0).get("rgba")],
-//         ],
-//       },
-//       marker: {
-//         radius: 2,
-//       },
-//       lineWidth: 1,
-//       states: {
-//         hover: {
-//           lineWidth: 1,
-//         },
-//       },
-//       threshold: null,
-//     },
-//     series: {},
-//   },
-//   series: [
-//     {
-//       name: "deaths",
-//       type: "area",
-//       data: [] as number[][],
-//     },
-//   ],
-// };
 
 const options = {
   chart: {
@@ -99,19 +33,13 @@ const options = {
     title: "total",
   },
   legend: {
-    enabled: false,
+    enabled: true,
   },
   plotOptions: {
     series: {
       pointWidth: 5,
       borderColor: "#E63946",
     },
-    // spline: {
-    //   lineWidth: 4,
-    //   marker: {
-    //     enabled: false,
-    //   },
-    // },
   },
   tooltip: {
     pointFormat: "{series.name}: <b>{point.y:,.0f}</b>",
@@ -121,6 +49,10 @@ const options = {
       name: "",
       data: [] as any,
       color: "#E63946",
+      borderColor: "",
+      visible: true,
+      type: "",
+      opacity: 1,
     },
   ],
 };
@@ -148,28 +80,52 @@ export const CountryChart = () => {
         .filter((a) => a.Deaths !== 0)
         .map((a, b, arr) => {
           let previousDeathValue = 0;
-          let delta = 0;
+          let previousConfirmedValue = 0;
+          let deathDelta = 0;
+          let confirmedDelta = 0;
 
           if (typeof arr[b - 1] === "object") {
             previousDeathValue = arr[b - 1].Deaths;
+            previousConfirmedValue = arr[b - 1].Confirmed;
+
             let currentDeathValue = arr[b].Deaths;
-            if (currentDeathValue === 0) {
-              console.log("here");
-            }
-            delta =
+            let currentConfirmedValue = arr[b].Confirmed;
+
+            deathDelta =
               currentDeathValue > previousDeathValue
                 ? currentDeathValue - previousDeathValue
                 : previousDeathValue;
+
+            confirmedDelta =
+              currentConfirmedValue > previousConfirmedValue
+                ? currentConfirmedValue - previousConfirmedValue
+                : previousConfirmedValue;
           }
 
-          return [new Date(a.Date).getTime(), delta];
+          return {
+            death: [new Date(a.Date).getTime(), deathDelta],
+            positive: [new Date(a.Date).getTime(), confirmedDelta],
+          };
         });
 
       newOptions.series = [
         {
           name: "deaths",
-          data: series,
+          data: series.map((d) => d.death),
+          type: "line",
           color: "#E63946",
+          borderColor: "#E63946",
+          opacity: 1,
+          visible: true,
+        },
+        {
+          name: "positive",
+          data: series.map((d) => d.positive),
+          type: "column",
+          color: "#c3c3c3",
+          borderColor: "#c3c3c3",
+          opacity: 0.5,
+          visible: true,
         },
       ];
 
@@ -179,14 +135,19 @@ export const CountryChart = () => {
   }, [value]);
 
   return (
-    <div>
-      <Box pt={2}>
-        {!chartOptions ? (
+    <Box pt={2}>
+      {!chartOptions ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          style={{ height: "316px" }}
+        >
           <CircularProgress />
-        ) : (
-          <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-        )}
-      </Box>
-    </div>
+        </Box>
+      ) : (
+        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+      )}
+    </Box>
   );
 };

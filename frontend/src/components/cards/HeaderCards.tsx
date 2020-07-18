@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Grid, makeStyles } from "@material-ui/core";
+import { Typography, Grid, makeStyles } from "@material-ui/core";
 import { useMount } from "react-use";
 import { format } from "date-fns";
 import { Card } from "./Card";
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
       // backgroundColor: "#ececec",
     },
     color: "#fff",
+    alignSelf: "center",
   },
   charts: {
     paddingTop: theme.spacing(2),
@@ -46,36 +47,31 @@ export const HeaderCards = (props: any) => {
   });
 
   return (
-    <Box display="flex" justifyContent="center" flexDirection="column">
-      <Box
-        display="flex"
-        justifyContent="center"
-        flexDirection="column"
-        alignItems="center"
-        pb={2}
-      >
-        <Box>
-          <Typography className={classes.country}>
+    <Grid container>
+      <Grid container direction="column" alignItems="center">
+        <Grid item>
+          <Typography className={classes.country} component="div">
             {value?.country} <br />
           </Typography>
-        </Box>
-        <Box>
-          <Typography className={classes.date}>
+        </Grid>
+        <Grid item>
+          <Typography className={classes.date} component="div">
             {value && format(new Date(), "MM/dd/yyyy")}
           </Typography>
-        </Box>
-      </Box>
-      <Grid container spacing={3}>
-        <Grid item xs={6} sm={3} xl={3}>
+        </Grid>
+      </Grid>
+
+      <Grid container alignItems="center">
+        <Grid item xs={12} sm={3} xl={3}>
           <Card title="Total Deaths" value={value?.deaths} />
         </Grid>
-        <Grid item xs={6} sm={3} xl={3}>
+        <Grid item xs={12} sm={3} xl={3}>
           <Card title="Total Cases" value={value?.cases} />
         </Grid>
-        <Grid item xs={6} sm={3} xl={3}>
+        <Grid item xs={12} sm={3} xl={3}>
           <Card title="Recovered" value={value?.recovered} />
         </Grid>
-        <Grid item xs={6} sm={3} xl={3}>
+        <Grid item xs={12} sm={3} xl={3}>
           <Card title="Critical" value={value?.critical} />
         </Grid>
       </Grid>
@@ -88,6 +84,6 @@ export const HeaderCards = (props: any) => {
           <Card title="Today Cases" value={value?.todayCases || 0} />
         </Grid>
       </Grid>
-    </Box>
+    </Grid>
   );
 };
