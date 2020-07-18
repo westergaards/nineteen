@@ -1,48 +1,48 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import { Box, CircularProgress } from "@material-ui/core";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import darkUnica from "highcharts/themes/dark-unica";
-import "./Region.css";
-darkUnica(Highcharts);
+import React, { useEffect, useState } from 'react'
+import { Box, CircularProgress } from '@material-ui/core'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
+import darkUnica from 'highcharts/themes/dark-unica'
+import './Region.css'
+darkUnica(Highcharts)
 
 const options = {
   chart: {
-    type: "column",
-    zoomType: "x",
+    type: 'column',
+    zoomType: 'x',
     height: 450,
-    backgroundColor: "#000",
+    backgroundColor: '#000'
   },
   title: {
-    verticalAlign: "bottom",
+    verticalAlign: 'bottom'
   },
   xAxis: {
-    type: "datetime",
+    type: 'datetime'
   },
   yAxis: {
     gridLineWidth: 0,
     visible: true,
-    min: 0,
+    min: 0
   },
   legend: {
-    enabled: true,
+    enabled: true
   },
   plotOptions: {},
   tooltip: {
-    pointFormat: "{series.name}: <b>{point.y:,.0f}</b>",
+    pointFormat: '{series.name}: <b>{point.y:,.0f}</b>'
   },
   series: [
     {
-      name: "",
+      name: '',
       data: [] as any,
-      color: "",
+      color: '',
       pointWidth: 20,
-      borderColor: "",
-      type: "",
-    },
-  ],
-};
+      borderColor: '',
+      type: ''
+    }
+  ]
+}
 
 export const Region = ({
   name,
@@ -51,10 +51,10 @@ export const Region = ({
   hospitialized,
   death,
   color,
-  average,
+  average
 }) => {
-  const [chartOptions, setChartOptions] = useState(options);
-  const [showChart, setShowChart] = useState(false);
+  const [chartOptions, setChartOptions] = useState(options)
+  const [showChart, setShowChart] = useState(false)
 
   useEffect(() => {
     if (positiveIncrease) {
@@ -73,53 +73,41 @@ export const Region = ({
               <div style="display: flex; font-size: 14px; justify-content: center; font-weight: 600;">
                 (yesterday vs 10 day avg)
               </div>
-            </div>`,
-        },
-      };
+            </div>`
+        }
+      }
 
       newOptions.series = [
         {
-          name: "positive",
-          type: "spline",
+          name: 'positive',
+          type: 'spline',
           data: positiveIncrease,
           color: color,
           borderColor: color,
-          pointWidth: 2,
+          pointWidth: 2
         },
         {
-          name: "hospitialized",
-          type: "line",
+          name: 'hospitialized',
+          type: 'line',
           data: hospitialized,
-          color: "#e9c46aff",
-          borderColor: "#e9c46aff",
-          pointWidth: 2,
+          color: '#e9c46aff',
+          borderColor: '#e9c46aff',
+          pointWidth: 2
         },
         {
-          name: "death",
-          type: "spline",
+          name: 'death',
+          type: 'spline',
           data: death,
-          color: "#f4a261ff",
-          borderColor: "#f4a261ff",
-          pointWidth: 2,
-        },
-      ];
-      // newOptions.series = [
-      //   {
-      //     name: "positiveIncrease",
-      //     // type: "spline",
-      //     data: positiveIncrease,
-      //     visible: true,
-      //     color: "#E63946",
-      //     lineWidth: 3,
-      //     crisp: false,
-      //     enableMouseTracking: false,
-      //   },
-      // ];
+          color: '#f4a261ff',
+          borderColor: '#f4a261ff',
+          pointWidth: 2
+        }
+      ]
 
-      setChartOptions(newOptions);
-      setShowChart(true);
+      setChartOptions(newOptions)
+      setShowChart(true)
     }
-  }, [positiveIncrease]);
+  }, [positiveIncrease])
 
   return (
     <Box>
@@ -129,7 +117,7 @@ export const Region = ({
           display="flex"
           alignItems="center"
           justifyContent="center"
-          style={{ backgroundColor: "#000" }}
+          style={{ backgroundColor: '#000' }}
         >
           <CircularProgress />
         </Box>
@@ -137,5 +125,5 @@ export const Region = ({
         <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       )}
     </Box>
-  );
-};
+  )
+}
