@@ -1,109 +1,100 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
-import { Box, CircularProgress } from "@material-ui/core";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import darkUnica from "highcharts/themes/dark-unica";
-import numeral from "numeral";
-import { useStateStats } from "../../../App";
+import React, { useState, useEffect } from 'react'
+import { Box, CircularProgress } from '@material-ui/core'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
+import darkUnica from 'highcharts/themes/dark-unica'
+import numeral from 'numeral'
+import { useStateStats } from '../../../App'
 
-darkUnica(Highcharts);
+darkUnica(Highcharts)
 
 const options = {
   chart: {
-    type: "column",
-    zoomType: "x",
+    type: 'column',
+    zoomType: 'x',
     height: 300,
-    backgroundColor: "#000",
+    backgroundColor: '#000'
   },
   title: {
-    verticalAlign: "bottom",
+    verticalAlign: 'bottom'
   },
   xAxis: {
-    type: "datetime",
+    type: 'datetime'
   },
   yAxis: [
     {
       gridLineWidth: 0,
       visible: false,
       min: 0,
-      text: "p",
+      text: 'p'
     },
     {
       gridLineWidth: 0,
       visible: true,
       min: 0,
-      text: "t",
+      text: 't'
     },
     {
       gridLineWidth: 0,
       visible: false,
       min: 0,
-      text: "pe",
-    },
+      text: 'pe'
+    }
   ],
   legend: {
-    enabled: true,
+    enabled: true
   },
   plotOptions: {},
   tooltip: {
-    pointFormat: "{series.name}: <b>{point.y:,.0f}</b>",
+    pointFormat: '{series.name}: <b>{point.y:,.0f}</b>'
   },
   series: [
     {
-      name: "",
+      name: '',
       data: [] as any,
-      color: "",
+      color: '',
       pointWidth: 20,
-      borderColor: "",
-      type: "",
+      borderColor: '',
+      type: '',
       yAxis: 0,
       opacity: 1,
-      visible: false,
-    },
-  ],
-};
+      visible: false
+    }
+  ]
+}
 
 export const StateBarChart = (props: HighchartsReact.Props) => {
-  const [chartOptions, setChartOptions] = useState(options);
-  const [showChart, setShowChart] = useState(false);
-  const [states] = useStateStats();
+  const [chartOptions, setChartOptions] = useState(options)
+  const [showChart, setShowChart] = useState(false)
+  const [states] = useStateStats()
 
   useEffect(() => {
     if (states[props.state]) {
-      let filtered = states[props.state].sort(
-        (a, b) => a.datetime - b.datetime
-      );
+      let filtered = states[props.state].sort((a, b) => a.datetime - b.datetime)
 
       /* redo this */
       let data = filtered.map((f) => {
         return {
-          totalTestResultsIncrease: [
-            f.datetime,
-            f.totalTestResultsIncrease || 0,
-          ],
+          totalTestResultsIncrease: [f.datetime, f.totalTestResultsIncrease || 0],
           positiveIncrease: [f.datetime, f.positiveIncrease || 0],
           percentIncrease: [
             f.datetime,
-            f.positiveIncrease > 0
-              ? (f.positiveIncrease / f.totalTestResultsIncrease) * 100
-              : 0,
-          ],
-        };
-      });
+            f.positiveIncrease > 0 ? (f.positiveIncrease / f.totalTestResultsIncrease) * 100 : 0
+          ]
+        }
+      })
 
-      let averageSlice = data.slice(filtered.length - 11, filtered.length - 1);
+      let averageSlice = data.slice(filtered.length - 11, filtered.length - 1)
 
-      const arrAvg = (arr) =>
-        arr.reduce((a, b) => a + b.positiveIncrease[1], 0) / arr.length;
+      const arrAvg = (arr) => arr.reduce((a, b) => a + b.positiveIncrease[1], 0) / arr.length
 
-      const percentAvg = (arr) =>
-        arr.reduce((a, b) => a + b.percentIncrease[1], 0) / arr.length;
+      const percentAvg = (arr) => arr.reduce((a, b) => a + b.percentIncrease[1], 0) / arr.length
 
-      let average = arrAvg(averageSlice);
-      let lastIndex = data[data.length - 1].positiveIncrease[1];
-      let color = lastIndex > average ? "#E63946" : "#06d6a0";
-      let percentAverage = numeral(percentAvg(averageSlice)).format("0.[00]");
+      let average = arrAvg(averageSlice)
+      let lastIndex = data[data.length - 1].positiveIncrease[1]
+      let color = lastIndex > average ? '#E63946' : '#06d6a0'
+      let percentAverage = numeral(percentAvg(averageSlice)).format('0.[00]')
 
       const newOptions = {
         ...chartOptions,
@@ -120,50 +111,50 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
               <div style="display: flex; font-size: 14px; justify-content: center; font-weight: 600;">
                 (yesterday vs 10 day avg) / percent positive
               </div>
-            </div>`,
-        },
-      };
+            </div>`
+        }
+      }
 
       newOptions.series = [
         {
-          name: "positive",
-          type: "line",
+          name: 'positive',
+          type: 'line',
           data: data.map((f) => f.positiveIncrease),
           color: color,
           borderColor: color,
           pointWidth: 2,
           yAxis: 0,
           opacity: 1,
-          visible: true,
+          visible: true
         },
         {
-          name: "tests",
-          type: "column",
+          name: 'tests',
+          type: 'column',
           data: data.map((f) => f.totalTestResultsIncrease),
-          color: "#c3c3c3",
-          borderColor: "#c3c3c3",
+          color: '#c3c3c3',
+          borderColor: '#c3c3c3',
           opacity: 0.5,
           pointWidth: 2,
           yAxis: 1,
-          visible: true,
+          visible: true
         },
         {
-          name: "% positive",
-          type: "spline",
+          name: '% positive',
+          type: 'spline',
           data: data.map((f) => f.percentIncrease),
-          color: "#f4a261ff",
-          borderColor: "#f4a261ff",
+          color: '#f4a261ff',
+          borderColor: '#f4a261ff',
           pointWidth: 2,
           yAxis: 2,
           opacity: 1,
-          visible: true,
-        },
-      ];
+          visible: true
+        }
+      ]
 
-      setChartOptions(newOptions);
-      setShowChart(true);
+      setChartOptions(newOptions)
+      setShowChart(true)
     }
-  }, [props.state, states]);
+  }, [props.state, states])
   return (
     <Box>
       {!showChart ? (
@@ -172,7 +163,7 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          style={{ backgroundColor: "#000" }}
+          style={{ backgroundColor: '#000' }}
         >
           <CircularProgress />
         </Box>
@@ -180,5 +171,5 @@ export const StateBarChart = (props: HighchartsReact.Props) => {
         <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       )}
     </Box>
-  );
-};
+  )
+}

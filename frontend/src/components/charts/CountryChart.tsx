@@ -53,6 +53,7 @@ const options = {
       visible: true,
       type: "",
       opacity: 1,
+      pointWidth: 2,
     },
   ],
 };
@@ -116,6 +117,7 @@ export const CountryChart = () => {
           color: "#E63946",
           borderColor: "#E63946",
           opacity: 1,
+          pointWidth: 2,
           visible: true,
         },
         {
@@ -125,6 +127,7 @@ export const CountryChart = () => {
           color: "#c3c3c3",
           borderColor: "#c3c3c3",
           opacity: 0.5,
+          pointWidth: 2,
           visible: true,
         },
       ];
