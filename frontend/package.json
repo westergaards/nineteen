@@ -21,7 +21,7 @@
     "@types/react-scroll": "^1.5.4",
     "axios": "^0.19.2",
     "date-fns": "^2.13.0",
-    "highcharts": "^8.1.0",
+    "highcharts": "^8.1.1",
     "highcharts-react-official": "^3.0.0",
     "novelcovid": "^1.2.7",
     "numeral": "^2.0.6",
