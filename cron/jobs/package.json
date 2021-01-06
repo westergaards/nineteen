@@ -9,7 +9,7 @@
     "start:db": "serverless dynamodb install && serverless dynamodb start"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "class-transformer": "^0.2.3",
     "date-fns": "^2.13.0",
     "es6-shim": "^0.35.5",
