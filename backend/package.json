@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.682.0",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "serverless-api-gateway-caching": "^1.4.1",
     "serverless-offline": "^6.4.0",
     "source-map-support": "^0.5.10"
